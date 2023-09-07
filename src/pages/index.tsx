@@ -27,6 +27,7 @@ export default function Home() {
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
           crossOrigin=""
         ></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJNZQ4N7Ioji3sZmHjRoHpVZpjc714niM&libraries=places"></script>
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.description}>
