@@ -37,7 +37,7 @@ export default function MapContainer(props: Props) {
 
   return (
     <div>
-      <LoadScript googleMapsApiKey="AIzaSyDJNZQ4N7Ioji3sZmHjRoHpVZpjc714niM">
+      <LoadScript googleMapsApiKey="">
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={18}
