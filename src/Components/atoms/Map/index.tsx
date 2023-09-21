@@ -1,39 +1,25 @@
-import { Button, Input } from "@mui/material";
-import {
-  DrawingManager,
-  GoogleMap,
-  Libraries,
-  MarkerF,
-  useJsApiLoader,
-  Data,
-  DrawingManagerF,
-} from "@react-google-maps/api";
-import { useEffect, useRef, useState } from "react";
-import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
-import InputSearchPlace from "../InputSearchPlace";
+import { Position } from "@/pages";
+import { DrawingManagerF, GoogleMap, MarkerF } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
 
 interface Props {
+  position: Position | null;
   onChangeLocation: (position: { lat: number; lng: number }) => void;
 }
 
-const libraries: Libraries = ["places", "maps", "drawing"];
+const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 
 export default function MapContainer(props: Props) {
   const mapStyles = {
-    height: "600px",
-    width: "700px",
-  };
-  const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: apiKey,
-    libraries,
-  });
+    width: "100%", // Ancho del mapa
+    height: "600px", // Altura del mapa
+    backgroundColor: "#f0f0f0", // Color de fondo del mapa
+    border: "1px solid #ccc", // Borde del mapa
+    borderRadius: "8px", // Radio de borde del mapa
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Sombra del mapa
 
-  const [currentLocation, setCurrentLocation] = useState({
-    lat: 10.96854,
-    lng: -74.78132,
-  });
+    // Otras propiedades y valores personalizados según tus necesidades
+  };
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -43,7 +29,6 @@ export default function MapContainer(props: Props) {
           const longitude = position.coords.longitude;
 
           // Actualiza el estado con la ubicación actual
-          setCurrentLocation({ lat: latitude, lng: longitude });
           props.onChangeLocation({ lat: latitude, lng: longitude });
         },
         function (error) {
@@ -55,42 +40,26 @@ export default function MapContainer(props: Props) {
     }
   }, []);
 
-  const { ref } = usePlacesWidget({
-    apiKey,
-    onPlaceSelected: (place) => console.log(place),
-  });
-
   const [polygon, setPolygon] = useState<google.maps.Polygon[]>([]);
 
-  if (!isLoaded) return null;
   return (
-    <div>
-      <InputSearchPlace
-        onSelectPlace={(e) => {
-          props.onChangeLocation(e);
-          setCurrentLocation({
-            lat: e.lat,
-            lng: e.lng,
-          });
-        }}
-      />
-      {polygon.length ? (
-        <button
-          onClick={() => {
-            polygon.forEach((e) => e.getPath().clear());
+    <div
+      className="mapcontainer"
+      style={{
+        width: "95%",
+        alignSelf: "center",
+        height: "100%",
 
-            setPolygon([]);
-          }}
-        >
-          Borrar
-        </button>
-      ) : null}
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={21}
-        center={currentLocation}
+        center={props.position ?? defaultPosition}
       >
-        <MarkerF position={currentLocation} />
+        {props.position != null && <MarkerF position={props.position} />}
         <DrawingManagerF
           drawingMode={google.maps.drawing.OverlayType.POLYGON}
           options={{
@@ -121,6 +90,25 @@ export default function MapContainer(props: Props) {
           }}
         />
       </GoogleMap>
+
+      {polygon.length ? (
+        <button
+          onClick={() => {
+            polygon.forEach((e) => e.getPath().clear());
+            setPolygon([]);
+          }}
+          className="clear-button"
+          style={{
+            alignSelf: "end",
+            width: "fitcontainer",
+            marginInlineEnd: "20px",
+            height: "35px",
+            marginBlock: "20px",
+          }}
+        >
+          Borrar área selecionada
+        </button>
+      ) : null}
     </div>
   );
 }

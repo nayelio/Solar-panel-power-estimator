@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
-const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
+export const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
 
 type Place = {
   place_id: string;
@@ -56,7 +56,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
   };
 
   return (
-    <div>
+    <div className="inputSearchPlace">
       <Autocomplete
         disablePortal
         id="combo-box-demo"
@@ -73,6 +73,14 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
         )}
         noOptionsText=""
         loading={isPlacePredictionsLoading}
+        style={{
+          width: "40%",
+          position: "relative",
+          zIndex: "2",
+          backgroundColor: "white",
+          left: "2.4%",
+        }}
+        className="inputbox"
       />
     </div>
   );
