@@ -1,5 +1,5 @@
 import { dividerClasses } from "@mui/material";
 
 export default function Main() {
-  return <div></div>;
+  return <h1>Hello, Dashboard Page!</h1>;
 }
