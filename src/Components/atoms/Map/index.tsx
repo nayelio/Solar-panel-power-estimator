@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
@@ -14,7 +16,8 @@ export default function MapContainer(props: Props) {
     lat: 10.96854,
     lng: -74.78132,
   });
-
+  const apiKey = process.env.MAP_API_KEY;
+  console.log(apiKey);
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -37,7 +40,7 @@ export default function MapContainer(props: Props) {
 
   return (
     <div>
-      <LoadScript googleMapsApiKey="AIzaSyDJNZQ4N7Ioji3sZmHjRoHpVZpjc714niM">
+      <LoadScript googleMapsApiKey="AIzaSyBS4pSnVBQUgW25s4Nya5RLmssC3Ej5btk">
         <GoogleMap
           mapContainerStyle={mapStyles}
           zoom={18}

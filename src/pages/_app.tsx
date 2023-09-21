@@ -1,9 +1,11 @@
+require("dotenv").config();
+
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { AxisOptions } from "react-charts";
 import React from "react";
 import dynamic from "next/dynamic";
-import MapContainer from "@/Components/Map";
+import MapContainer from "@/Components/atoms/Map";
 import {
   MenuItem,
   Select,
@@ -98,11 +100,6 @@ export default function App({ Component, pageProps }: AppProps) {
         </FormControl>
       </Box>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <MapContainer
-          onChangeLocation={(pos) => {
-            setPosition(pos);
-          }}
-        />
         {data != null && (
           <div style={{ height: 300, width: 500 }}>
             <Chart
@@ -114,7 +111,13 @@ export default function App({ Component, pageProps }: AppProps) {
             />
           </div>
         )}
+        //<MapContainer
+onChangeLocation={(pos) => {
+ setPosition(pos);
+}}
+>
       </div>
     </div>
   );
 }
+
