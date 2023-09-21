@@ -1,7 +1,6 @@
-require("dotenv").config();
-
-import React, { useEffect, useState } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
+import Autocomplete from "react-google-autocomplete";
 
 interface Props {
   onChangeLocation: (position: { lat: number; lng: number }) => void;
@@ -11,13 +10,17 @@ export default function MapContainer(props: Props) {
     height: "600px",
     width: "700px",
   };
+  const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: apiKey,
+  });
 
   const [CurrentLocation, setCurrentLocation] = useState({
     lat: 10.96854,
     lng: -74.78132,
   });
-  const apiKey = process.env.MAP_API_KEY;
-  console.log(apiKey);
+
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -38,15 +41,21 @@ export default function MapContainer(props: Props) {
     }
   }, []);
 
+  if (!isLoaded) return null;
   return (
     <div>
-      <LoadScript googleMapsApiKey="">
-        <GoogleMap
-          mapContainerStyle={mapStyles}
-          zoom={18}
-          center={CurrentLocation}
-        ></GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        mapContainerStyle={mapStyles}
+        zoom={18}
+        center={CurrentLocation}
+      ></GoogleMap>
+      <Autocomplete
+        apiKey={apiKey}
+        onPlaceSelected={(place) => {
+          console.log(place);
+        }}
+      />
+      ;
     </div>
   );
 }

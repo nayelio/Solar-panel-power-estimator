@@ -111,13 +111,12 @@ export default function App({ Component, pageProps }: AppProps) {
             />
           </div>
         )}
-        //<MapContainer
-onChangeLocation={(pos) => {
- setPosition(pos);
-}}
->
+        <MapContainer
+          onChangeLocation={(pos) => {
+            setPosition(pos);
+          }}
+        />
       </div>
     </div>
   );
 }
-
