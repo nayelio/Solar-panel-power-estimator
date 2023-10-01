@@ -36,10 +36,10 @@ const Chart = ({ position }: Props) => {
     setLoading(true);
     if (position === null) return;
     const rest = await fetch(
-      `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2020&latitude=${position.lat}&longitude=${position.lng}&community=ag&parameters=ALLSKY_SFC_SW_DIFF&format=json&user=nayeli&header=true`
+      `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2022&end=2022&latitude=${position.lat}&longitude=${position.lng}&community=ag&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`
     );
     const response = await rest.json();
-    var list = Object.values(response.properties.parameter.ALLSKY_SFC_SW_DIFF);
+    var list = Object.values(response.properties.parameter.ALLSKY_SFC_SW_DWN);
     console.log(list);
     setData({
       series: 1,

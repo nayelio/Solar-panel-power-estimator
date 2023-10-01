@@ -1,0 +1,19 @@
+.item {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  color: blue;
+}
+.MuiInputBase-root
+  MuiOutlinedInput-root
+  MuiInputBase-colorPrimary
+  MuiInputBase-fullWidth
+  MuiInputBase-formControl
+  MuiInputBase-adornedEnd
+  MuiAutocomplete-inputRoot
+  css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root {
+  border-radius: 15px;
+}

@@ -1,11 +1,11 @@
-import Chart from "@/components/atoms/Chart";
-import InputSearchPlace from "@/components/atoms/InputSearchPlace";
-import MapContainer from "@/components/atoms/Map";
+import Chart from "./components/atoms/Chart";
+import InputSearchPlace from "./components/atoms/InputSearchPlace";
+import MapContainer from "./components/atoms/Map";
 import { SelectChangeEvent } from "@mui/material";
 import { Libraries, useJsApiLoader } from "@react-google-maps/api";
 import type { AppProps } from "next/app";
 import React, { useState } from "react";
-
+import Image from "next/image";
 export type Position = {
   lat: number;
   lng: number;
@@ -17,6 +17,8 @@ const libraries: Libraries = ["places", "maps", "drawing"];
 
 export default function App({ Component, pageProps }: AppProps) {
   const [position, setPosition] = useState<null | Position>(null);
+  const [area, setArea] = useState(0);
+  const [perimeter, setPerimeter] = useState(0);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -32,9 +34,17 @@ export default function App({ Component, pageProps }: AppProps) {
         flexDirection: "column",
         fontSize: "20px",
         paddingInline: "20px",
+        height: "100%",
       }}
     >
-      <h1>SunPower Ease</h1>
+      <Image
+        src="/SunPower.png"
+        width={280}
+        height={50}
+        alt="Picture of the author"
+      />
+      <br></br>
+      <br></br>
       <div
         style={{
           display: "flex",
@@ -45,15 +55,17 @@ export default function App({ Component, pageProps }: AppProps) {
         className="pagessss"
       >
         <InputSearchPlace
-          onSelectPlace={(e) => {
+          onSelectPlace={(e: React.SetStateAction<Position | null>) => {
             setPosition(e);
           }}
         />
         <MapContainer
           position={position}
-          onChangeLocation={(pos) => {
+          onChangeLocation={(pos: React.SetStateAction<Position | null>) => {
             setPosition(pos);
           }}
+          setArea={setArea}
+          setPerimeter={setPerimeter}
         />
       </div>
       {position ? (
@@ -73,8 +85,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <div className="information">
             {" "}
             <h3>Información registrada</h3>
-            <h5>Area: {}</h5>
-            <h5>Perimetro: {}</h5>
+            <h5>Area: {area.toFixed(2)} m2</h5>
+            <h5>Perimetro: {perimeter.toFixed(2)} m2</h5>
           </div>
           {position != null && <Chart position={position} />}
         </div>

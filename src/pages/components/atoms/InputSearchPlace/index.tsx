@@ -65,7 +65,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
           getPlacePredictions({ input: value });
         }}
         onChange={(_, value) => onPress(value)}
-        sx={{ width: 300 }}
+        sx={{ width: 300, "& .MuiInputBase-root": { borderRadius: "15px" } }}
         getOptionLabel={(option) => option.description}
         isOptionEqualToValue={(option) => option.place_id === place?.place_id}
         renderInput={(params) => (

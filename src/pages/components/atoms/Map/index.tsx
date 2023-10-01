@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 interface Props {
   position: Position | null;
   onChangeLocation: (position: { lat: number; lng: number }) => void;
+  setArea: (area: number) => void;
+  setPerimeter: (perimeter: number) => void;
 }
 
 const defaultPosition = { lat: 10.96854, lng: -74.78132 };
@@ -12,10 +14,10 @@ const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 export default function MapContainer(props: Props) {
   const mapStyles = {
     width: "100%", // Ancho del mapa
-    height: "600px", // Altura del mapa
+    height: "500px", // Altura del mapa
     backgroundColor: "#f0f0f0", // Color de fondo del mapa
     border: "1px solid #ccc", // Borde del mapa
-    borderRadius: "8px", // Radio de borde del mapa
+    borderRadius: "30px", // Radio de borde del mapa
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Sombra del mapa
 
     // Otras propiedades y valores personalizados según tus necesidades
@@ -49,9 +51,10 @@ export default function MapContainer(props: Props) {
         width: "95%",
         alignSelf: "center",
         height: "100%",
-
         display: "flex",
         flexDirection: "column",
+        borderRadius: "20px",
+        justifyContent: "center",
       }}
     >
       <GoogleMap
@@ -60,6 +63,7 @@ export default function MapContainer(props: Props) {
         center={props.position ?? defaultPosition}
       >
         {props.position != null && <MarkerF position={props.position} />}
+
         <DrawingManagerF
           drawingMode={google.maps.drawing.OverlayType.POLYGON}
           options={{
@@ -79,12 +83,11 @@ export default function MapContainer(props: Props) {
           }}
           onPolygonComplete={(e) => {
             setPolygon((prev) => [...prev, e]);
-            console.log(
-              "area",
+
+            props.setArea(
               google.maps.geometry.spherical.computeArea(e.getPath())
             );
-            console.log(
-              "perimetro",
+            props.setPerimeter(
               google.maps.geometry.spherical.computeLength(e.getPath())
             );
           }}
