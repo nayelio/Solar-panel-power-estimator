@@ -19,7 +19,7 @@ export default function MapContainer(props: Props) {
     border: "1px solid #ccc", // Borde del mapa
     borderRadius: "30px", // Radio de borde del mapa
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Sombra del mapa
-
+    mapTypeId: "satellite",
     // Otras propiedades y valores personalizados según tus necesidades
   };
 
@@ -59,8 +59,9 @@ export default function MapContainer(props: Props) {
     >
       <GoogleMap
         mapContainerStyle={mapStyles}
-        zoom={21}
+        zoom={23}
         center={props.position ?? defaultPosition}
+        mapTypeId="satellite" // Establece la vista por defecto como satelital
       >
         {props.position != null && <MarkerF position={props.position} />}
 

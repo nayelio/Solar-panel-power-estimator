@@ -55,17 +55,17 @@ const Chart = ({ position }: Props) => {
 
   useEffect(() => {
     onSearch();
-  }, [position]);
+  }, [position]); //if positio changed onSearch will
 
   const primaryAxis = React.useMemo(
-    (): AxisOptions<Item> => ({
+    (): AxisOptions<any> => ({
       getValue: (datum) => datum.primary,
     }),
     []
   );
 
   const secondaryAxes = React.useMemo(
-    (): AxisOptions<Item>[] => [
+    (): AxisOptions<any>[] => [
       {
         getValue: (datum) => datum.secondary,
       },
@@ -79,8 +79,8 @@ const Chart = ({ position }: Props) => {
       <ChartComponent
         options={{
           data: [data],
-          primaryAxis,
-          secondaryAxes,
+          primaryAxis: primaryAxis,
+          secondaryAxes: secondaryAxes,
         }}
       />
     </div>
