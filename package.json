@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@googlemaps/js-api-loader": "^1.16.2",
     "@googlemaps/react-wrapper": "^1.1.35",
+    "@mui/icons-material": "^5.14.11",
     "@mui/material": "^5.14.5",
     "@mui/styled-engine-sc": "^5.12.0",
     "@react-google-maps/api": "^2.19.2",
@@ -31,6 +32,7 @@
     "react-google-autocomplete": "^2.7.3",
     "react-leaflet": "^4.2.1",
     "react-query": "^3.39.3",
+    "sharp": "^0.32.6",
     "styled-components": "^5.3.11",
     "typescript": "5.1.6"
   },

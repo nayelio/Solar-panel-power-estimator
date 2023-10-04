@@ -6,50 +6,279 @@ import Link from "next/link";
 export default function Main() {
   return (
     <div
-      className="body"
       style={{
         display: "flex",
-        flexDirection: "row",
-        width: "90%",
-        marginInline: "5%",
+        flexDirection: "column",
         alignItems: "center",
       }}
     >
       <div
-        className="textAndbutton"
-        style={{ display: "flex", flexDirection: "column" }}
+        className="body"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "90%",
+          marginInline: "5%",
+          alignItems: "center",
+          background: "white",
+        }}
       >
-        <h1 style={{ textAlign: "left", fontSize: "60px" }}>
-          TRANSFORMA, CRECE Y <span style={{ color: "#35428D" }}>AHORRA</span>
-        </h1>
-        <h2>
-          Aprovecha el potencial solar de la región y genera ahorros en facturas
-          e impuestos
-        </h2>
-        <button
-          className="StartButton"
+        <div
+          className="textAndbutton"
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <h1
+            style={{
+              color: "black",
+              fontFamily: "andada pro",
+              fontSize: "70px",
+              fontStyle: "normal",
+              fontWeight: "700",
+              lineHeight: "normal",
+            }}
+          >
+            TRANSFORMA, CRECE Y <span style={{ color: "#ED411A" }}>AHORRA</span>
+          </h1>
+          <h2
+            style={{
+              color: "black",
+              fontFamily: "andada pro",
+              fontSize: "25px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+          >
+            Aprovecha el potencial solar de la región y genera ahorros en
+            facturas e impuestos
+          </h2>
+          <div
+            style={{
+              display: "inlineFlex",
+              flexDirection: "column",
+              alignItems: "flexStart",
+              gap: "15px",
+            }}
+          >
+            <button
+              className="StartButton"
+              style={{
+                borderRadius: "80px",
+                backgroundColor: "#ED411A",
+                color: "white",
+                fontSize: "18px",
+                fontWeight: "500",
+                height: "47px",
+                width: "196.606px",
+                boxShadow: "0px 10px 4px 0px rgbg(0,0,0,0.25)",
+              }}
+            >
+              <Link href="/" style={{ color: "white" }}>
+                Empieza ahora
+              </Link>
+            </button>
+            <button
+              className="StartButton"
+              style={{
+                borderRadius: "80px",
+                backgroundColor: "#d9d9d9",
+                color: "white",
+                fontSize: "18px",
+                fontWeight: "500",
+                height: "47px",
+                width: "196.606px",
+                boxShadow: "0px 10px 4px 0px rgbg(0,0,0,0.25)",
+              }}
+            >
+              <Link href="/" style={{ color: "black" }}>
+                Más información
+              </Link>
+            </button>
+          </div>
+        </div>
+        <Image
+          src="/SunPower-main.png"
+          width={650}
+          height={650}
+          alt="Picture of the author"
+        />
+      </div>
+      <div
+        style={{
+          width: "80%",
+          height: "40%",
+          flexShrink: "0",
+          borderRadius: "20px",
+          background: "rgba(217, 217, 217, 0.20)",
+          boxShadow: "0px 4px 4px 0px rgbg(0,0,0,0.24)",
+          display: "flex",
+          flexDirection: "row",
+          padding: "5%",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <h3
+            style={{
+              color: "black",
+              fontFamily: "andada pro",
+              fontSize: "18px",
+              fontStyle: "normal",
+              fontWeight: "500",
+              lineHeight: "normal",
+              width: "90%",
+              textAlign: "left",
+            }}
+          >
+            ¿Cuáles son nuestros servicios?
+          </h3>
+          <p
+            style={{
+              color: "black",
+              fontFamily: "andada pro",
+              fontSize: "15px",
+              fontStyle: "normal",
+              fontWeight: "400",
+
+              textAlign: "left",
+            }}
+          >
+            Toma decisiones con seguridad
+          </p>
+        </div>
+        <div
           style={{
-            backgroundColor: "#35428D",
-            width: "40%",
-            height: "40px",
-            fontSize: "18px",
-            color: "#ffffff",
-            borderRadius: "20px",
-            border: "none",
-            boxShadow: "-moz-initial",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "10%",
           }}
         >
-          <Link href="/" style={{ color: "white" }}>
-            Empieza ahora
-          </Link>
-        </button>
+          <Image
+            src="/systemIcon.png"
+            width={35}
+            height={35}
+            alt="Picture of the author"
+          />
+          <div>
+            <h3
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "18px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "normal",
+
+                textAlign: "left",
+              }}
+            >
+              Conoce tu sistema
+            </h3>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "normal",
+                textAlign: "left",
+              }}
+            >
+              Sabrás que necesitas para tu sistema
+            </p>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "10%",
+          }}
+        >
+          <Image
+            src="/systemIcon.png"
+            width={35}
+            height={35}
+            alt="Picture of the author"
+          />
+          <div>
+            <h3
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "18px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "normal",
+
+                textAlign: "left",
+              }}
+            >
+              Conoce tu sistema
+            </h3>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "normal",
+                textAlign: "left",
+              }}
+            >
+              Sabrás que necesitas para tu sistema
+            </p>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "10%",
+          }}
+        >
+          <Image
+            src="/systemIcon.png"
+            width={35}
+            height={35}
+            alt="Picture of the author"
+          />
+          <div>
+            <h3
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "18px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "normal",
+
+                textAlign: "left",
+              }}
+            >
+              Conoce tu sistema
+            </h3>
+            <p
+              style={{
+                color: "black",
+                fontFamily: "andada pro",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: "400",
+                lineHeight: "normal",
+                textAlign: "left",
+              }}
+            >
+              Sabrás que necesitas para tu sistema
+            </p>
+          </div>
+        </div>
       </div>
-      <Image
-        src="/MainPanel.png"
-        width={700}
-        height={700}
-        alt="Picture of the author"
-      />
     </div>
   );
 }

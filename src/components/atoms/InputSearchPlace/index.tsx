@@ -59,26 +59,41 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
     <div className="inputSearchPlace">
       <Autocomplete
         disablePortal
-        id="combo-box-demo"
+        id="google-map-demo"
         options={placePredictions}
         onInputChange={(event, value) => {
           getPlacePredictions({ input: value });
         }}
         onChange={(_, value) => onPress(value)}
-        sx={{ width: 300, "& .MuiInputBase-root": { borderRadius: "15px" } }}
+        sx={{
+          width: 300,
+          "& .MuiInputBase-root": { borderRadius: "15px" },
+        }}
         getOptionLabel={(option) => option.description}
         isOptionEqualToValue={(option) => option.place_id === place?.place_id}
         renderInput={(params) => (
-          <TextField {...params} placeholder="Buscar dirección" />
+          <TextField
+            {...params}
+            placeholder="Buscar dirección"
+            label="Selecciona la ubicación de interés"
+            sx={{
+              "& label.MuiInputLabel-root": {
+                color: "#ED411A", // Cambia el color del label a rojo
+              },
+            }}
+          />
         )}
-        noOptionsText=""
+        noOptionsText="Ejemplo: Carrera xx #xx-xxx"
         loading={isPlacePredictionsLoading}
         style={{
           width: "40%",
-          position: "relative",
+          position: "absolute",
           zIndex: "2",
           backgroundColor: "white",
-          left: "2.4%",
+          left: "50%",
+          borderRadius: "30px",
+          color: "#ED411A",
+          top: "35%",
         }}
         className="inputbox"
       />

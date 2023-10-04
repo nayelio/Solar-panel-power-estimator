@@ -14,12 +14,11 @@ const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 export default function MapContainer(props: Props) {
   const mapStyles = {
     width: "100%", // Ancho del mapa
-    height: "500px", // Altura del mapa
+    height: "80%", // Altura del mapa
     backgroundColor: "#f0f0f0", // Color de fondo del mapa
     border: "1px solid #ccc", // Borde del mapa
     borderRadius: "30px", // Radio de borde del mapa
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Sombra del mapa
-    mapTypeId: "satellite",
+    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     // Otras propiedades y valores personalizados según tus necesidades
   };
 
@@ -50,11 +49,12 @@ export default function MapContainer(props: Props) {
       style={{
         width: "95%",
         alignSelf: "center",
-        height: "100%",
+        height: "90%",
         display: "flex",
         flexDirection: "column",
         borderRadius: "20px",
-        justifyContent: "center",
+        position: "absolute",
+        marginBlockStart: "2%",
       }}
     >
       <GoogleMap
