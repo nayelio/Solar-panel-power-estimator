@@ -67,7 +67,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
         onChange={(_, value) => onPress(value)}
         sx={{
           width: 300,
-          "& .MuiInputBase-root": { borderRadius: "15px" },
+          "& .MuiInputBase-root": { borderRadius: "30px" },
         }}
         getOptionLabel={(option) => option.description}
         isOptionEqualToValue={(option) => option.place_id === place?.place_id}
@@ -93,7 +93,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
           left: "50%",
           borderRadius: "30px",
           color: "#ED411A",
-          top: "35%",
+          top: "28%",
         }}
         className="inputbox"
       />

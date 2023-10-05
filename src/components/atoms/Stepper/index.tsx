@@ -119,10 +119,18 @@ function ColorlibStepIcon(props: StepIconProps) {
 
 const steps = ["Selecciona la ubicación", "Dibuja el área", "Resultados"];
 
-export default function CustomizedSteppers() {
+interface Props {
+  step: number;
+}
+
+export default function CustomizedSteppers({ step = 0 }: Props) {
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
-      <Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={step}
+        connector={<QontoConnector />}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>

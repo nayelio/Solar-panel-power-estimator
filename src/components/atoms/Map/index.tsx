@@ -1,5 +1,11 @@
 import { Position } from "@/pages";
-import { DrawingManagerF, GoogleMap, MarkerF } from "@react-google-maps/api";
+import {
+  DrawingManagerF,
+  GoogleMap,
+  MarkerF,
+  RectangleF,
+  RectangleProps,
+} from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -7,30 +13,30 @@ interface Props {
   onChangeLocation: (position: { lat: number; lng: number }) => void;
   setArea: (area: number) => void;
   setPerimeter: (perimeter: number) => void;
+  areaButton: boolean;
 }
 
 const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 
+const mapStyles = {
+  width: "100%", // Ancho del mapa
+  height: "80%", // Altura del mapa
+  backgroundColor: "#f0f0f0", // Color de fondo del mapa
+  border: "1px solid #ccc", // Borde del mapa
+  borderRadius: "30px", // Radio de borde del mapa
+  boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+  // Otras propiedades y valores personalizados según tus necesidades
+};
+
 export default function MapContainer(props: Props) {
-  const mapStyles = {
-    width: "100%", // Ancho del mapa
-    height: "80%", // Altura del mapa
-    backgroundColor: "#f0f0f0", // Color de fondo del mapa
-    border: "1px solid #ccc", // Borde del mapa
-    borderRadius: "30px", // Radio de borde del mapa
-    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-    // Otras propiedades y valores personalizados según tus necesidades
-  };
+  const [panels, setPanels] = useState<RectangleProps["bounds"][]>([]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          // Actualiza el estado con la ubicación actual
-          props.onChangeLocation({ lat: latitude, lng: longitude });
+        function (positionFromPermission) {
+          const latitude = positionFromPermission.coords.latitude;
+          const longitude = positionFromPermission.coords.longitude;
         },
         function (error) {
           console.error("Error al obtener la ubicación: " + error.message);
@@ -65,6 +71,10 @@ export default function MapContainer(props: Props) {
       >
         {props.position != null && <MarkerF position={props.position} />}
 
+        {panels.map((item, index) => (
+          <RectangleF key={index} bounds={item} />
+        ))}
+
         <DrawingManagerF
           drawingMode={google.maps.drawing.OverlayType.POLYGON}
           options={{
@@ -74,7 +84,7 @@ export default function MapContainer(props: Props) {
               drawingModes: [google.maps.drawing.OverlayType.POLYGON],
             },
             circleOptions: {
-              fillColor: `#ffff00`,
+              fillColor: props.areaButton ? "F16A6A" : "fffaaa",
               fillOpacity: 1,
               strokeWeight: 5,
               clickable: false,
@@ -91,6 +101,10 @@ export default function MapContainer(props: Props) {
             props.setPerimeter(
               google.maps.geometry.spherical.computeLength(e.getPath())
             );
+
+            const items = fillPolygonWithSquares(e);
+
+            setPanels((prev) => [...prev, ...items]);
           }}
         />
       </GoogleMap>
@@ -100,6 +114,7 @@ export default function MapContainer(props: Props) {
           onClick={() => {
             polygon.forEach((e) => e.getPath().clear());
             setPolygon([]);
+            setPanels([]);
           }}
           className="clear-button"
           style={{
@@ -115,4 +130,70 @@ export default function MapContainer(props: Props) {
       ) : null}
     </div>
   );
+}
+
+var height = 5;
+var width = 2;
+
+function fillPolygonWithSquares(polygon: google.maps.Polygon) {
+  var polygonBounds = new google.maps.LatLngBounds();
+  polygon.getPaths().forEach(function (path) {
+    path.forEach(function (latlng) {
+      polygonBounds.extend(latlng);
+    });
+  });
+
+  var polygonArea = google.maps.geometry.spherical.computeArea(
+    polygon.getPath()
+  );
+
+  var rectWidthInSqMeters = width;
+  var rectHeightInSqMeters = height;
+
+  var numRectsWidth = Math.ceil(polygonArea / rectWidthInSqMeters);
+  var numRectsHeight = Math.ceil(polygonArea / rectHeightInSqMeters);
+
+  var latIncrement = rectHeightInSqMeters / 111111; // 1 grado de latitud es aproximadamente 111111 metros
+
+  var panels = [];
+
+  for (var i = 0; i < numRectsHeight; i++) {
+    for (var j = 0; j < numRectsWidth; j++) {
+      var lat = polygonBounds.getSouthWest().lat() + i * latIncrement;
+      var lng =
+        polygonBounds.getSouthWest().lng() +
+        j * (rectWidthInSqMeters / (111111 * Math.cos((lat * Math.PI) / 180)));
+
+      var rectangleBounds = {
+        north: lat + latIncrement,
+        south: lat,
+        east:
+          lng +
+          rectWidthInSqMeters / (111111 * Math.cos((lat * Math.PI) / 180)),
+        west: lng,
+      };
+      if (
+        google.maps.geometry.poly.containsLocation(
+          new google.maps.LatLng(lat, lng),
+          polygon
+        ) &&
+        google.maps.geometry.poly.containsLocation(
+          new google.maps.LatLng(rectangleBounds.north, rectangleBounds.east),
+          polygon
+        ) &&
+        google.maps.geometry.poly.containsLocation(
+          new google.maps.LatLng(rectangleBounds.north, rectangleBounds.west),
+          polygon
+        ) &&
+        google.maps.geometry.poly.containsLocation(
+          new google.maps.LatLng(rectangleBounds.south, rectangleBounds.east),
+          polygon
+        )
+      ) {
+        panels.push(rectangleBounds);
+      }
+    }
+  }
+
+  return panels;
 }
