@@ -20,7 +20,7 @@ app.prepare().then(() => {
   });
 
   // Puerto en el que se ejecutará el servidor
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3005;
 
   server.listen(port, (err) => {
     if (err) throw err;
