@@ -49,7 +49,7 @@ export default function Main() {
               lineHeight: "normal",
             }}
           >
-            Aprovecha el potencial solar de la región y genera ahorros en
+            Aprovecha el potencial solar de la regións y genera ahorros en
             facturas e impuestos
           </h2>
           <div
@@ -173,7 +173,7 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Conoce tu sistema
+              Recibe un presupuesto de potencia solar en la zona
             </h3>
             <p
               style={{
@@ -186,7 +186,7 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Sabrás que necesitas para tu sistema
+              Podras saber cuantos Watts en promedio aprovecharias al mes
             </p>
           </div>
         </div>
@@ -217,7 +217,7 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Conoce tu sistema
+              Conoce el sistema que se ajusta a tu necesidad{" "}
             </h3>
             <p
               style={{
@@ -230,7 +230,8 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Sabrás que necesitas para tu sistema
+              Sabrás que necesitas para tu sistema según la potencia solar de la
+              zona{" "}
             </p>
           </div>
         </div>
@@ -261,7 +262,7 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Conoce tu sistema
+              Conoce cual será tu ahorro{" "}
             </h3>
             <p
               style={{
@@ -274,7 +275,8 @@ export default function Main() {
                 textAlign: "left",
               }}
             >
-              Sabrás que necesitas para tu sistema
+              Sabrás cuál puede ser el coste de tu sistema y cuanto ahorro
+              obtienes segun las leyes colombianas
             </p>
           </div>
         </div>

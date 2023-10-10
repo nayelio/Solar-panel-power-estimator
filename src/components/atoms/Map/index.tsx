@@ -14,7 +14,13 @@ interface Props {
   setArea: (area: number) => void;
   setPerimeter: (perimeter: number) => void;
   areaButton: boolean;
+  setPanels: React.Dispatch<React.SetStateAction<RectangleProps["bounds"][]>>;
+  panels: RectangleProps["bounds"][];
+  setPolygon: React.Dispatch<React.SetStateAction<google.maps.Polygon[]>>;
+  polygon: google.maps.Polygon[];
+  enableDraw: boolean;
 }
+const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
 
 const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 
@@ -28,8 +34,21 @@ const mapStyles = {
   // Otras propiedades y valores personalizados según tus necesidades
 };
 
-export default function MapContainer(props: Props) {
-  const [panels, setPanels] = useState<RectangleProps["bounds"][]>([]);
+export default function MapContainer({
+  panels,
+  polygon,
+  setPolygon,
+  setPanels,
+  ...props
+}: Props) {
+  const elevation = async () => {
+    if (props.position === null) return;
+    const rest = await fetch(
+      `https://maps.googleapis.com/maps/api/elevation/json?locations=${props.position.lat}%2C${props.position.lng}&key=${apiKey}`
+    );
+
+    console.log(rest);
+  };
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -46,8 +65,6 @@ export default function MapContainer(props: Props) {
       console.error("La geolocalización no es compatible en este navegador.");
     }
   }, []);
-
-  const [polygon, setPolygon] = useState<google.maps.Polygon[]>([]);
 
   return (
     <div
@@ -81,7 +98,9 @@ export default function MapContainer(props: Props) {
             drawingControl: true,
             drawingControlOptions: {
               position: google.maps.ControlPosition.TOP_CENTER,
-              drawingModes: [google.maps.drawing.OverlayType.POLYGON],
+              drawingModes: props.enableDraw
+                ? [google.maps.drawing.OverlayType.POLYGON]
+                : [],
             },
             circleOptions: {
               fillColor: props.areaButton ? "F16A6A" : "fffaaa",
@@ -108,32 +127,12 @@ export default function MapContainer(props: Props) {
           }}
         />
       </GoogleMap>
-
-      {polygon.length ? (
-        <button
-          onClick={() => {
-            polygon.forEach((e) => e.getPath().clear());
-            setPolygon([]);
-            setPanels([]);
-          }}
-          className="clear-button"
-          style={{
-            alignSelf: "end",
-            width: "fitcontainer",
-            marginInlineEnd: "20px",
-            height: "35px",
-            marginBlock: "20px",
-          }}
-        >
-          Borrar área selecionada
-        </button>
-      ) : null}
     </div>
   );
 }
 
-var height = 5;
-var width = 2;
+var height = 2;
+var width = 1;
 
 function fillPolygonWithSquares(polygon: google.maps.Polygon) {
   var polygonBounds = new google.maps.LatLngBounds();

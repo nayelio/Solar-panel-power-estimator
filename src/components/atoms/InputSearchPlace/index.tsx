@@ -1,4 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
+import React from "react";
 import { useState } from "react";
 
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
@@ -62,6 +63,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
         id="google-map-demo"
         options={placePredictions}
         onInputChange={(event, value) => {
+          value.replace(/[#\-]/g, " ").trim;
           getPlacePredictions({ input: value });
         }}
         onChange={(_, value) => onPress(value)}
@@ -74,7 +76,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Buscar dirección"
+            placeholder="Busca una dirección"
             label="Selecciona la ubicación de interés"
             sx={{
               "& label.MuiInputLabel-root": {
