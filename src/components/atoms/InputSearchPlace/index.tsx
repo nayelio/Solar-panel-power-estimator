@@ -51,6 +51,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
             lng,
             place_id: item.place_id,
           });
+          console.log(placeDetails);
         }
       }
     );

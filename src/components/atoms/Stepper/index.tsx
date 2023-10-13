@@ -123,7 +123,7 @@ interface Props {
   step: number;
 }
 
-export default function CustomizedSteppers({ step = 0 }: Props) {
+export default function StepperF({ step = 0 }: Props) {
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper

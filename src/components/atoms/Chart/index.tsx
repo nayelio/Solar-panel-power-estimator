@@ -1,9 +1,24 @@
 import { useRef, useState } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
-import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { Position } from "@/pages";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 type Props = {
   position: Position | null;
@@ -17,7 +32,7 @@ type Data = {
 const Chart = ({ position }: Props) => {
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(false);
-  const barRef = useRef<null>(null);
+  const barRef = React.createRef();
 
   const labels = [
     "Enero",
@@ -37,13 +52,15 @@ const Chart = ({ position }: Props) => {
     setLoading(true);
     if (position === null) return;
     const rest = await fetch(
-      `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2022&latitude=${position.lat}&longitude=${position.lng}&community=ag&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`
+      `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2022&latitude=${position.lat}&longitude=${position.lng}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`
     );
     const response = await rest.json();
     console.log(response);
     if (!response) return alert("Error");
     const list = response.properties.parameter["ALLSKY_SFC_SW_DWN"];
 
+    const elevation = response.geometry.coordinates.Elevation;
+    console.log(elevation);
     let valuesByMonth: Record<string, number[]> = {};
 
     for (var name in list) {
@@ -60,12 +77,15 @@ const Chart = ({ position }: Props) => {
       );
       mediaByMonth[mes] = totalByMonth / valuesByMonth[mes].length;
     }
+
     setData({
       labels,
       datasets: [
         {
-          label: "Meses",
-          data: Object.values(mediaByMonth),
+          label: "Potencia",
+          data: Object.keys(mediaByMonth)
+            .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+            .map((item) => mediaByMonth[item]),
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
       ],
@@ -92,7 +112,7 @@ const Chart = ({ position }: Props) => {
   if (!data) return null;
   return (
     <div style={{ height: "100%", width: "40%", padding: "100px" }}>
-      <Bar options={options} data={data} ref={barRef} />
+      <Bar options={options} data={data} />
     </div>
   );
 };

@@ -41,15 +41,6 @@ export default function MapContainer({
   setPanels,
   ...props
 }: Props) {
-  const elevation = async () => {
-    if (props.position === null) return;
-    const rest = await fetch(
-      `https://maps.googleapis.com/maps/api/elevation/json?locations=${props.position.lat}%2C${props.position.lng}&key=${apiKey}`
-    );
-
-    console.log(rest);
-  };
-
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -84,48 +75,43 @@ export default function MapContainer({
         mapContainerStyle={mapStyles}
         zoom={23}
         center={props.position ?? defaultPosition}
-        mapTypeId="satellite" // Establece la vista por defecto como satelital
+        mapTypeId="satellite"
+        // Establece la vista por defecto como satelital
       >
         {props.position != null && <MarkerF position={props.position} />}
 
         {panels.map((item, index) => (
           <RectangleF key={index} bounds={item} />
         ))}
+        {props.enableDraw ? (
+          <DrawingManagerF
+            drawingMode={google.maps.drawing.OverlayType.POLYGON}
+            options={{
+              polygonOptions: {
+                geodesic: true,
+                strokeWeight: 2,
+              },
+              drawingControl: true,
+              drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: [google.maps.drawing.OverlayType.POLYGON],
+              },
+            }}
+            onPolygonComplete={(e) => {
+              setPolygon((prev) => [...prev, e]);
 
-        <DrawingManagerF
-          drawingMode={google.maps.drawing.OverlayType.POLYGON}
-          options={{
-            drawingControl: true,
-            drawingControlOptions: {
-              position: google.maps.ControlPosition.TOP_CENTER,
-              drawingModes: props.enableDraw
-                ? [google.maps.drawing.OverlayType.POLYGON]
-                : [],
-            },
-            circleOptions: {
-              fillColor: props.areaButton ? "F16A6A" : "fffaaa",
-              fillOpacity: 1,
-              strokeWeight: 5,
-              clickable: false,
-              editable: true,
-              zIndex: 1,
-            },
-          }}
-          onPolygonComplete={(e) => {
-            setPolygon((prev) => [...prev, e]);
+              props.setArea(
+                google.maps.geometry.spherical.computeArea(e.getPath())
+              );
+              props.setPerimeter(
+                google.maps.geometry.spherical.computeLength(e.getPath())
+              );
+              const items = fillPolygonWithSquares(e);
 
-            props.setArea(
-              google.maps.geometry.spherical.computeArea(e.getPath())
-            );
-            props.setPerimeter(
-              google.maps.geometry.spherical.computeLength(e.getPath())
-            );
-
-            const items = fillPolygonWithSquares(e);
-
-            setPanels((prev) => [...prev, ...items]);
-          }}
-        />
+              setPanels((prev) => [...prev, ...items]);
+            }}
+          />
+        ) : null}
       </GoogleMap>
     </div>
   );
