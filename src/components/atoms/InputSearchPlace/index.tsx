@@ -1,7 +1,8 @@
 import { Autocomplete, TextField } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-
+import usePlacesAutocompleteService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+import { TownEnum } from "../RateResults";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 export const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
@@ -26,9 +27,15 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
   } = usePlacesService({
     apiKey,
   });
+  const townsToSearch = [
+    TownEnum.Barranquilla,
+    TownEnum.Galapa,
+    TownEnum.PuertoColombia,
+    TownEnum.Soledad,
+  ];
 
   const [place, setPlace] = useState<Place | null>(null);
-
+  const [found, setFound] = useState<boolean>(false);
   const onPress = (item: google.maps.places.AutocompletePrediction | null) => {
     if (!item) return;
     placesService?.getDetails(
@@ -51,7 +58,21 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
             lng,
             place_id: item.place_id,
           });
-          console.log(placeDetails);
+          const formattedAdress = placeDetails?.formatted_address?.split(",");
+          if (formattedAdress) {
+            for (let i = 0; i < formattedAdress.length; i++) {
+              if (townsToSearch.includes(formattedAdress[i])) {
+                setFound(true);
+                console.log(
+                  `Se encontró ${formattedAdress[i]} en la dirección.`
+                );
+                break;
+              }
+              s;
+            }
+          }
+
+          console.log(formattedAdress);
         }
       }
     );
@@ -64,7 +85,6 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
         id="google-map-demo"
         options={placePredictions}
         onInputChange={(event, value) => {
-          value.replace(/[#\-]/g, " ").trim;
           getPlacePredictions({ input: value });
         }}
         onChange={(_, value) => onPress(value)}
@@ -72,7 +92,10 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
           width: 300,
           "& .MuiInputBase-root": { borderRadius: "30px" },
         }}
-        getOptionLabel={(option) => option.description}
+        getOptionLabel={(option) =>
+          typeof option === "string" ? option : option.description
+        }
+        filterOptions={(x) => x}
         isOptionEqualToValue={(option) => option.place_id === place?.place_id}
         renderInput={(params) => (
           <TextField
@@ -86,7 +109,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
             }}
           />
         )}
-        noOptionsText="Ejemplo: Carrera xx #xx-xxx"
+        noOptionsText="Ingresa la dirección"
         loading={isPlacePredictionsLoading}
         style={{
           width: "40%",
