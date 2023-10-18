@@ -1,19 +1,40 @@
 .buttonArray {
   display: flex;
-  width: 283px;
+  width: 40%;
   align-items: flex-end;
   align-content: flex-end;
   gap: 7px;
   flex-wrap: wrap;
+  padding-top: 8%;
 }
 .button1,
-.button2,
-.button3 {
+.button2 {
   width: fit-content;
   padding-inline: 5%;
-  height: 52px;
+  height: 80%;
   border-radius: 50px;
   border: 1px solid #324e76;
   color: black;
   background-color: white;
+  color: #000;
+  font-family: Andada Pro;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.button3 {
+  width: fit-content;
+  padding-inline: 5%;
+  height: 80%;
+  border-radius: 50px;
+  border: 1px solid #324e76;
+  color: black;
+  background-color: white;
+  color: #000;
+  font-family: Andada Pro;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
