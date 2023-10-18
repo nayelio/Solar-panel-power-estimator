@@ -6,7 +6,7 @@ import {
   RectangleF,
 } from "@react-google-maps/api";
 import { useEffect } from "react";
-import styles from "./styles.module.css";
+
 interface Props {
   enableDraw: boolean;
 }
@@ -43,7 +43,7 @@ export default function MapContainer({ enableDraw }: Props) {
   }, []);
 
   return (
-    <div className={styles.map}>
+    <div>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={23}
