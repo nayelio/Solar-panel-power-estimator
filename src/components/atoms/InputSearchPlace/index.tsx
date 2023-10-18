@@ -1,9 +1,8 @@
+import { useRate } from "@/contexts/RateContext";
 import { Autocomplete, TextField } from "@mui/material";
-import React from "react";
 import { useState } from "react";
-import usePlacesAutocompleteService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
-import { TownEnum } from "../RateResults";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+import { TownEnum } from "../RateResults";
 
 export const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
 
@@ -18,7 +17,15 @@ type Props = {
   onSelectPlace: (place: Place) => void;
 };
 
+const townsToSearch = [
+  TownEnum.Barranquilla,
+  TownEnum.Galapa,
+  TownEnum.PuertoColombia,
+  TownEnum.Soledad,
+];
+
 const InputSearchPlace = ({ onSelectPlace }: Props) => {
+  const { setTown } = useRate();
   const {
     placesService,
     placePredictions,
@@ -27,15 +34,8 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
   } = usePlacesService({
     apiKey,
   });
-  const townsToSearch = [
-    TownEnum.Barranquilla,
-    TownEnum.Galapa,
-    TownEnum.PuertoColombia,
-    TownEnum.Soledad,
-  ];
-
   const [place, setPlace] = useState<Place | null>(null);
-  const [found, setFound] = useState<boolean>(false);
+
   const onPress = (item: google.maps.places.AutocompletePrediction | null) => {
     if (!item) return;
     placesService?.getDetails(
@@ -58,21 +58,15 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
             lng,
             place_id: item.place_id,
           });
-          const formattedAdress = placeDetails?.formatted_address?.split(",");
-          if (formattedAdress) {
-            for (let i = 0; i < formattedAdress.length; i++) {
-              if (townsToSearch.includes(formattedAdress[i])) {
-                setFound(true);
-                console.log(
-                  `Se encontró ${formattedAdress[i]} en la dirección.`
-                );
-                break;
-              }
-              s;
-            }
-          }
+          const town = placeDetails?.address_components
+            ?.filter((item) =>
+              item.types.includes("administrative_area_level_2")
+            )
+            ?.find((address) =>
+              townsToSearch.includes(address.long_name ?? "")
+            )?.long_name;
 
-          console.log(formattedAdress);
+          setTown(town ?? null);
         }
       }
     );

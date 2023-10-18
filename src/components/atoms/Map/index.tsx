@@ -1,26 +1,15 @@
-import { Position } from "@/pages";
+import { usePosition } from "@/contexts/PositionContext";
 import {
   DrawingManagerF,
   GoogleMap,
   MarkerF,
   RectangleF,
-  RectangleProps,
 } from "@react-google-maps/api";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface Props {
-  position: Position | null;
-  onChangeLocation: (position: { lat: number; lng: number }) => void;
-  setArea: (area: number) => void;
-  setPerimeter: (perimeter: number) => void;
-  areaButton: boolean;
-  setPanels: React.Dispatch<React.SetStateAction<RectangleProps["bounds"][]>>;
-  panels: RectangleProps["bounds"][];
-  setPolygon: React.Dispatch<React.SetStateAction<google.maps.Polygon[]>>;
-  polygon: google.maps.Polygon[];
   enableDraw: boolean;
 }
-const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY ?? "";
 
 const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 
@@ -34,13 +23,9 @@ const mapStyles = {
   // Otras propiedades y valores personalizados según tus necesidades
 };
 
-export default function MapContainer({
-  panels,
-  polygon,
-  setPolygon,
-  setPanels,
-  ...props
-}: Props) {
+export default function MapContainer({ enableDraw }: Props) {
+  const { position, panels, setPanels, setPerimeter, setPolygon, setArea } =
+    usePosition();
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -74,16 +59,16 @@ export default function MapContainer({
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={23}
-        center={props.position ?? defaultPosition}
+        center={position ?? defaultPosition}
         mapTypeId="satellite"
         // Establece la vista por defecto como satelital
       >
-        {props.position != null && <MarkerF position={props.position} />}
+        {position != null && <MarkerF position={position} />}
 
         {panels.map((item, index) => (
           <RectangleF key={index} bounds={item} />
         ))}
-        {props.enableDraw ? (
+        {enableDraw ? (
           <DrawingManagerF
             drawingMode={google.maps.drawing.OverlayType.POLYGON}
             options={{
@@ -100,10 +85,8 @@ export default function MapContainer({
             onPolygonComplete={(e) => {
               setPolygon((prev) => [...prev, e]);
 
-              props.setArea(
-                google.maps.geometry.spherical.computeArea(e.getPath())
-              );
-              props.setPerimeter(
+              setArea(google.maps.geometry.spherical.computeArea(e.getPath()));
+              setPerimeter(
                 google.maps.geometry.spherical.computeLength(e.getPath())
               );
               const items = fillPolygonWithSquares(e);
