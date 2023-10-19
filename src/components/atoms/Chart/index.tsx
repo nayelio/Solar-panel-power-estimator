@@ -11,6 +11,8 @@ import {
 import { Bar } from "react-chartjs-2";
 import React, { useEffect } from "react";
 import { Position } from "@/pages";
+import { usePosition } from "@/contexts/PositionContext";
+import { useRate } from "@/contexts/RateContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,17 +22,16 @@ ChartJS.register(
   Legend
 );
 
-type Props = {
-  position: Position | null;
-};
-
-type Data = {
+export type Data = {
   labels: string[];
   datasets: [{ label: string; data: number[]; backgroundColor: string }];
 };
 
-const Chart = ({ position }: Props) => {
+const Chart = () => {
   const [data, setData] = useState<Data | null>(null);
+  const { position } = usePosition();
+  const { setSunByDay } = useRate();
+
   const [loading, setLoading] = useState(false);
   const barRef = React.createRef();
 
@@ -55,12 +56,10 @@ const Chart = ({ position }: Props) => {
       `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2022&latitude=${position.lat}&longitude=${position.lng}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`
     );
     const response = await rest.json();
-    console.log(response);
+
     if (!response) return alert("Error");
     const list = response.properties.parameter["ALLSKY_SFC_SW_DWN"];
 
-    const elevation = response.geometry.coordinates.Elevation;
-    console.log(elevation);
     let valuesByMonth: Record<string, number[]> = {};
 
     for (var name in list) {
@@ -77,6 +76,10 @@ const Chart = ({ position }: Props) => {
       );
       mediaByMonth[mes] = totalByMonth / valuesByMonth[mes].length;
     }
+    const wattsPerDay =
+      Object.values(mediaByMonth).reduce((acc, curr) => acc + curr, 0) / 12;
+
+    setSunByDay(wattsPerDay);
 
     setData({
       labels,
@@ -90,6 +93,7 @@ const Chart = ({ position }: Props) => {
         },
       ],
     });
+
     setLoading(false);
   };
 

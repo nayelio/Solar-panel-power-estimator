@@ -1,6 +1,6 @@
 import { useRate } from "@/contexts/RateContext";
 import { InputAdornment, TextField } from "@mui/material";
-
+import styles from "./styles.module.css";
 export default function InputConsumeInformation() {
   const {
     consume,
@@ -11,15 +11,13 @@ export default function InputConsumeInformation() {
     streetLightingRate,
   } = useRate();
   const kWhValue = 944.2793;
-  console.log(securityRate?.Rate);
-  console.log(streetLightingRate?.Rate);
 
   return (
-    <div>
+    <div className={styles.box}>
       <TextField
         label="Consumo mensual"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{ m: 1, width: "100%", borderRadius: "30%" }}
         value={consume ?? ""}
         type="number"
         onChange={(e) => {
@@ -41,7 +39,7 @@ export default function InputConsumeInformation() {
       <TextField
         label="Valor del kW/hr"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{ m: 1, width: "100%" }}
         value={kwhPrice ?? ""}
         type="number"
         onChange={(e) => {
@@ -58,13 +56,6 @@ export default function InputConsumeInformation() {
           ),
         }}
       />
-
-      <p>
-        Security Rate: {securityRate?.Rate} {securityRate?.Units}
-        <br />
-        Lightning Rate: {streetLightingRate?.Rate} {streetLightingRate?.Units}
-        <br />
-      </p>
     </div>
   );
 }

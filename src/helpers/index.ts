@@ -1,3 +1,10 @@
+import { usePosition } from "@/contexts/PositionContext";
+
+type DataPanel = {
+  Id: number;
+  Power: number;
+  Price: number;
+};
 type Data = {
   Town: {
     Name: string;
@@ -22,3 +29,8 @@ export const getRate = <T extends Data>(
     ) ?? null
   );
 };
+
+export const getPanel = <T extends DataPanel>(
+  data: T[] | undefined,
+  consume: number | null
+) => {};

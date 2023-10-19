@@ -1,4 +1,4 @@
-import Chart from "@/components/atoms/Chart";
+import Chart, { Data } from "@/components/atoms/Chart";
 import InputConsumeInformation from "@/components/atoms/InputConsume";
 import Steper from "@/components/atoms/Stepper";
 import { PositionProvider, usePosition } from "@/contexts/PositionContext";
@@ -7,10 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import InputSearchPlace from "../components/atoms/InputSearchPlace";
 import MapContainer from "../components/atoms/Map";
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 import { RateProvider, useRate } from "@/contexts/RateContext";
 import Image from "next/image";
-import PHVSdescription from "@/components/molecules/PHVS_estimation";
+import PHVSdescription from "@/components/molecules/PHVSdescription";
 
 export type Position = {
   lat: number;
@@ -34,7 +34,6 @@ function Index() {
     setPolygon,
   } = usePosition();
 
-  const { securityRate, streetLightingRate } = useRate();
   const [showInput, setShowInput] = useState(true);
   const [step, setStep] = useState(0);
 
@@ -61,7 +60,7 @@ function Index() {
     } else {
       console.error("La geolocalización no es compatible en este navegador.");
     }
-  }, []);
+  }, [setPosition]);
 
   if (!isLoaded) return null;
 
@@ -165,79 +164,33 @@ function Index() {
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "100%",
+            height: "10%",
             width: "100%",
+            gap: "10%",
           }}
         >
-          <p
-            style={{
-              color: "#ED411A",
-              fontFamily: "Andada Pro",
-              fontSize: "18px",
-              fontStyle: "normal",
-              fontWeight: "800",
-              lineHeight: "normal",
-              padding: "1%",
-              gap: "3%",
-            }}
-          >
-            <Steper step={step} />
-            Tu sistema ideal es
-          </p>
-          <PHVSdescription panels={panels} />
-          <div
-            style={{
-              width: "55%",
-              alignSelf: "end",
-              height: "77%",
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "20px",
-              position: "absolute",
-              marginBlockStart: "9%",
-            }}
-          >
-            <MapContainer enableDraw={false} />
-          </div>
+          <Steper step={step} />
+          <br />
+          <br />
 
-          <p>Tus beneficios son</p>
           <div
             style={{
-              width: "89%",
-              justifyContent: "center",
-              justifySelf: "center",
-              alignSelf: "center",
-              height: "100%",
               display: "flex",
               flexDirection: "row",
-
-              marginBlockStart: "2%",
-              alignItems: "center",
+              height: "100%",
+              width: "100%",
               gap: "10%",
-              borderRadius: "30px",
-              background: "#FFF",
-              boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <div>
-              <h6>$29.000.000</h6>
-              <p>Son los ahorros por año</p>
+            <div className={styles.input}>
+              <InputConsumeInformation />
+              <PHVSdescription panels={panels} />
             </div>
-            <div>
-              <h6>$29.000.000</h6>
-              <p>Son los ahorros por año</p>
-            </div>
-            <div>
-              <h6>$29.000.000</h6>
-              <p>Son los ahorros por año</p>
-            </div>
-            <div>
-              <h6>$29.000.000</h6>
-              <p>Son los ahorros por año</p>
+
+            <div className={styles.Map}>
+              <MapContainer enableDraw={false} />
             </div>
           </div>
-          <Chart position={position} />
-          <InputConsumeInformation />
         </div>
       )}
     </div>
