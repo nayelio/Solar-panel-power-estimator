@@ -8,8 +8,9 @@ import React, { useEffect, useState } from "react";
 import InputSearchPlace from "../components/atoms/InputSearchPlace";
 import MapContainer from "../components/atoms/Map";
 import styles from "../styles/home.module.css";
-import { RateProvider } from "@/contexts/RateContext";
+import { RateProvider, useRate } from "@/contexts/RateContext";
 import Image from "next/image";
+import PHVSdescription from "@/components/molecules/PHVS_estimation";
 
 export type Position = {
   lat: number;
@@ -27,10 +28,13 @@ function Index() {
     setPosition,
     area,
     setArea,
+    panels,
     setPanels,
     polygon,
     setPolygon,
   } = usePosition();
+
+  const { securityRate, streetLightingRate } = useRate();
   const [showInput, setShowInput] = useState(true);
   const [step, setStep] = useState(0);
 
@@ -180,103 +184,7 @@ function Index() {
             <Steper step={step} />
             Tu sistema ideal es
           </p>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              height: "800%",
-              width: "100%",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                height: "70%",
-                width: "30%",
-                marginBlockStart: "2%",
-                alignItems: "start",
-                gap: "10%",
-                borderRadius: "30px",
-                background: "#FFF",
-                boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                padding: "2%",
-              }}
-            >
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Paneles solares
-              </p>
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Cantidad: {}
-              </p>
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Potencia: {}
-              </p>
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Inversor
-              </p>
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Cantidad: {}
-              </p>
-              <p
-                style={{
-                  color: "#000",
-                  fontFamily: "Andada Pro",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  lineHeight: "normal",
-                }}
-              >
-                Potencia: {}
-              </p>
-            </div>
-          </div>
+          <PHVSdescription panels={panels} />
           <div
             style={{
               width: "55%",
