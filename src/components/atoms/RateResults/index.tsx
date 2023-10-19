@@ -17,10 +17,5 @@ export enum TownEnum {
 }
 
 export default function RateResults({ town, consume }: Props) {
-  return (
-    <>
-      {JSON.stringify(StreetLightingrate, null, 2)}
-      {JSON.stringify(Securityrate, null, 2)}
-    </>
-  );
+  return;
 }

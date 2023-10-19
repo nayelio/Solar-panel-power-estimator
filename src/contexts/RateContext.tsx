@@ -21,7 +21,7 @@ type RateContextType = {
       }
     | null
     | undefined;
-
+  systemPrice: number | null;
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
   setConsume: React.Dispatch<React.SetStateAction<number | null>>;
   setKwhPrice: React.Dispatch<React.SetStateAction<number | null>>;
@@ -37,7 +37,7 @@ const RateContext = createContext<RateContextType>({
   power: 0,
   price: 0,
   panelToUse: null,
-
+  systemPrice: 0,
   setTown: () => {},
   setConsume: () => {},
   setKwhPrice: () => {},
@@ -84,12 +84,16 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const panelToUse = useMemo(() => {
     if (consume == null) return null;
     const minPower = consume / panels.length;
-    console.log(panelsRealValue);
     return panelsRealValue
       ?.filter((panel) => panel.value > minPower)
       .sort((panel1, panel2) => panel1.Price - panel2.Price)?.[0];
   }, [consume, panels.length, panelsRealValue]);
+  console.log(panelToUse);
 
+  const systemPrice = useMemo(() => {
+    const priceEstimate = (panelToUse?.Price ?? 0) * panels.length;
+    return priceEstimate;
+  }, [panelToUse?.Price, panels.length]);
   const value = useMemo(
     () => ({
       securityRate,
@@ -100,6 +104,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       price,
       power,
       consume,
+      systemPrice,
       setTown,
       setConsume,
       setKwhPrice,
@@ -109,6 +114,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       securityRate,
       streetLightingRate,
       kwhPrice,
+      systemPrice,
       panelToUse,
       listPanels,
       price,
@@ -121,8 +127,3 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useRate = () => useContext(RateContext);
-
-//  const systemPrice = useMemo(() => {
-//const priceEstimate = (panelToUse?.Price ?? 0) * panels.length;
-//return priceEstimate;
-//}, [panelToUse?.Price, panels.length]);

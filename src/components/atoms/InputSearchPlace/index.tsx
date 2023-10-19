@@ -63,7 +63,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
               item.types.includes("administrative_area_level_2")
             )
             ?.find((address) =>
-              townsToSearch.includes(address.long_name ?? "")
+              townsToSearch.includes((address.long_name ?? "") as TownEnum)
             )?.long_name;
 
           setTown(town ?? null);

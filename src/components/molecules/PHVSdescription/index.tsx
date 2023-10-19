@@ -8,7 +8,7 @@ interface props {
 }
 export default function PHVSdescription(Props: props) {
   const { panels } = usePosition();
-  const { panelToUse } = useRate();
+  const { panelToUse, systemPrice } = useRate();
 
   return (
     <div className={styles.container}>
@@ -17,7 +17,7 @@ export default function PHVSdescription(Props: props) {
         <p className={styles.pp}>
           Consto de instalación
           <br></br>
-          <p className={styles.p}>{}</p>
+          <p className={styles.p}>{systemPrice}</p>
         </p>
       </div>
 
@@ -25,11 +25,11 @@ export default function PHVSdescription(Props: props) {
         <p className={styles.pp}>
           Ahorro por beneficio tributario
           <br></br>
-          <p className={styles.p}>{}</p>
+          <p className={styles.p}>{systemPrice}</p>
         </p>
       </div>
 
-      <div className={styles.container}>
+      <div className={styles.informationContainer}>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
             <p className={styles.p}>{panels.length}</p>

@@ -113,12 +113,13 @@ const Chart = () => {
     },
   };
 
-  if (!data) return null;
-  return (
-    <div style={{ height: "100%", width: "40%", padding: "100px" }}>
-      <Bar options={options} data={data} />
-    </div>
-  );
+  // if (!data) return null;
+  return null;
 };
 
 export default Chart;
+// return (
+//   <div style={{ height: "100%", width: "40%", padding: "100px" }}>
+//     <Bar options={options} data={data} />
+//   </div>
+// );

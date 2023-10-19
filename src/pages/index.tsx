@@ -184,15 +184,16 @@ function Index() {
           >
             <div className={styles.input}>
               <InputConsumeInformation />
-              <PHVSdescription panels={panels} />
             </div>
 
             <div className={styles.Map}>
               <MapContainer enableDraw={false} />
             </div>
           </div>
+          <PHVSdescription panels={panels} />
         </div>
       )}
+      <Chart />
     </div>
   );
 }

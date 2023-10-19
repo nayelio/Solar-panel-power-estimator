@@ -16,6 +16,7 @@
   padding: 2%;
   justify-self: center;
   align-self: center;
+  position: relative;
 }
 .system {
   color: #000;
@@ -45,14 +46,16 @@
 .pp {
   color: #000;
   font-family: Andada Pro;
-  font-size: 20px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-.container {
-  display: flex;
 
-  align-items: flex-end;
-  gap: 50px;
+.informationContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  gap: 12%;
 }
