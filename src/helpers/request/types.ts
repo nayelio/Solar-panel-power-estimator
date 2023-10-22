@@ -20,3 +20,14 @@ export type Town = {
   Id: number;
   Name: string;
 };
+
+export type Panels = {
+  Id: number;
+  Power: number;
+  Price: number;
+};
+export type Inverters = {
+  Id: number;
+  Power: number;
+  Price: number;
+};

@@ -38,84 +38,37 @@
   justify-content: center;
   top: 90%;
 }
-
-/* ------------------------------------------------*/
-
-.ImageContainer {
+.informationBox {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 25%;
   position: absolute;
-  width: 100%;
+  z-index: 2;
+  background-color: white;
+  left: 60%;
+  border-radius: 30px;
+  color: #ed411a;
+  top: 25%;
+}
+.Map {
+  width: 55%;
+  left: 40%;
+  height: 77%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+.input {
+  width: 35%;
   height: 100%;
-  justify-content: center;
-}
-.h1Container {
+  border-radius: 30px;
+  border: 1px solid black;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding-block: 5%;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
   position: relative;
-  width: 100%;
-}
-.h1 {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-size: 60px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: Alumni Sans;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 96.8%;
-  color: black;
-}
-.span {
-  color: white; /* Color inicial */
-  animation: changeColor 4s linear infinite;
-}
-@keyframes changeColor {
-  0% {
-    color: red;
-  }
-  25% {
-    color: blue;
-  }
-  50% {
-    color: green;
-  }
-  75% {
-    color: orange;
-  }
-  100% {
-    color: red;
-  }
-}
-
-.h3Container {
-  height: fit-content;
-  display: flex;
-  top: 120%;
-  position: absolute;
-  width: 40%;
-  padding-inline-start: 5%;
-  flex-direction: column;
-}
-.h3 {
-  color: #000;
-  font-family: Alumni Sans;
-  font-size: 50px;
-  font-style: italic;
-  font-weight: 500;
-  line-height: normal;
-}
-.h3Span {
-  color: #324e76;
-  font-family: Alumni Sans;
-  font-size: 50px;
-  font-style: italic;
-  font-weight: 500;
-  line-height: normal;
-}
-.resultContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #9dcaf2;
-  fill: #9dcaf2;
 }

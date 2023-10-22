@@ -43,7 +43,19 @@ export default function MapContainer({ enableDraw }: Props) {
   }, []);
 
   return (
-    <div>
+    <div
+      className="mapcontainer"
+      style={{
+        width: "95%",
+        alignSelf: "center",
+        height: "90%",
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "20px",
+        position: "absolute",
+        marginBlockStart: "2%",
+      }}
+    >
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={23}

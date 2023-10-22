@@ -1,31 +1,36 @@
-import { Position } from "@/pages";
-import {
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-import FormControl from "@mui/material/FormControl";
-
-type Props = {
-  setInputConsume: React.Dispatch<React.SetStateAction<string | undefined>>;
-  inputConsume: string | undefined;
-  inputkWhValues: string | undefined;
-  setInputkWhValues: React.Dispatch<React.SetStateAction<string | undefined>>;
-};
-
-export default function InputConsumeInformation(props: Props) {
+import { useRate } from "@/contexts/RateContext";
+import { InputAdornment, TextField } from "@mui/material";
+import styles from "./styles.module.css";
+export default function InputConsumeInformation() {
+  const {
+    consume,
+    setConsume,
+    kwhPrice,
+    setKwhPrice,
+    securityRate,
+    streetLightingRate,
+  } = useRate();
   const kWhValue = 944.2793;
+
   return (
-    <div>
+    <div className={styles.box}>
       <TextField
         label="Consumo mensual"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
-        value={props.inputConsume}
-        onChange={(e) => props.setInputConsume(e.target.value)}
+        sx={{ m: 1, width: "100%", borderRadius: "30%" }}
+        value={consume ?? ""}
+        type="number"
+        onChange={(e) => {
+          const value = parseInt(e.target.value, 10);
+          console.log({
+            value,
+          });
+          if (isNaN(value)) {
+            setConsume(0);
+          } else {
+            setConsume(value);
+          }
+        }}
         InputProps={{
           startAdornment: <InputAdornment position="start">kW</InputAdornment>,
         }}
@@ -34,9 +39,17 @@ export default function InputConsumeInformation(props: Props) {
       <TextField
         label="Valor del kW/hr"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
-        value={props.inputkWhValues}
-        onChange={(e) => props.setInputkWhValues(e.target.value)}
+        sx={{ m: 1, width: "100%" }}
+        value={kwhPrice ?? ""}
+        type="number"
+        onChange={(e) => {
+          const value = parseInt(e.target.value, 10);
+          if (isNaN(value)) {
+            setKwhPrice(0);
+          } else {
+            setKwhPrice(value);
+          }
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">kw/hr</InputAdornment>
