@@ -1,6 +1,11 @@
 import { getRate } from "@/helpers";
 import request, { ApiEnum } from "@/helpers/request";
-import { Panels, SecurityRate, StreetLighting } from "@/helpers/request/types";
+import {
+  Inverters,
+  Panels,
+  SecurityRate,
+  StreetLighting,
+} from "@/helpers/request/types";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { usePosition } from "./PositionContext";
@@ -16,13 +21,14 @@ type RateContextType = {
   panelsRealValue:
     | {
         area: number;
-
+        Efficiency: number;
         value: number;
         Id: number;
         Power: number;
         Price: number;
       }[]
     | undefined;
+
   systemPrice: number | null;
   panelQuantity: number | null;
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
@@ -70,6 +76,10 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     queryFn: () => request<StreetLighting[]>(ApiEnum.StreetLightings),
     queryKey: [ApiEnum.StreetLightings],
   });
+  const { data: listInverter } = useQuery({
+    queryFn: () => request<Inverters[]>(ApiEnum.InverterDB),
+    queryKey: [ApiEnum.InverterDB],
+  });
 
   const securityRate = useMemo(() => {
     return getRate(securityData, consume, town);
@@ -89,10 +99,10 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       (panel.Width * panel.Height),
     area: panel.Width * panel.Height,
   }));
-  console.log(panelsRealValue);
+
   const panelQuantity = useMemo(() => {
     if (consume == null) return null;
-    return Math.ceil((consume * 1.3) / panelsRealValue?.[2]?.value!);
+    return Math.ceil(consume / panelsRealValue?.[2]?.value!);
   }, [consume, panelsRealValue]);
 
   const systemPrice = useMemo(() => {
@@ -100,6 +110,10 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     return priceEstimate;
   }, [panelQuantity, panelsRealValue]);
 
+  const inverterToUse = listInverter?.map((inverter) => ({
+    ...inverterToUse,
+    value,
+  }));
   const value = useMemo(
     () => ({
       securityRate,

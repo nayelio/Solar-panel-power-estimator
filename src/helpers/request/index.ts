@@ -5,6 +5,7 @@ export enum ApiEnum {
   StreetLightings = `${api}/streetLighting`,
   SecurityRates = `${api}/securityRate`,
   PanelsDB = `${api}/phvsPanels`,
+  InverterDB = `${api}/Inverters`,
 }
 
 const request = async <T>(url: ApiEnum): Promise<T> => {

@@ -52,7 +52,7 @@ export default function Buttons(props: Props) {
           width: "10%",
           height: "50%",
           borderRadius: "30px",
-          backgroundColor: "#324E76",
+          backgroundColor: "#000",
           color: "white",
           border: "1px solid",
         }}

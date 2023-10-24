@@ -92,9 +92,11 @@ const Chart = () => {
             .map(
               (item) =>
                 mediaByMonth[item] *
-                (panelsRealValue?.[2]?.value! *
+                ((panelsRealValue?.[2]?.Power! / 1000) *
+                  panelsRealValue?.[2]?.Efficiency! *
                   panelQuantity! *
-                  panelsRealValue?.[2]?.area!)
+                  panelsRealValue?.[2]?.area!) *
+                30
             ),
           backgroundColor: "#7DAFB0",
         },
