@@ -73,51 +73,45 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
   };
 
   return (
-    <div className="inputSearchPlace">
-      <Autocomplete
-        disablePortal
-        id="google-map-demo"
-        options={placePredictions}
-        onInputChange={(event, value) => {
-          getPlacePredictions({ input: value });
-        }}
-        onChange={(_, value) => onPress(value)}
-        sx={{
-          width: 300,
-          "& .MuiInputBase-root": { borderRadius: "30px" },
-        }}
-        getOptionLabel={(option) =>
-          typeof option === "string" ? option : option.description
-        }
-        filterOptions={(x) => x}
-        isOptionEqualToValue={(option) => option.place_id === place?.place_id}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            placeholder="Busca una dirección"
-            label="Selecciona la ubicación de interés"
-            sx={{
-              "& label.MuiInputLabel-root": {
-                color: "#ED411A", // Cambia el color del label a rojo
-              },
-            }}
-          />
-        )}
-        noOptionsText="Ingresa la dirección"
-        loading={isPlacePredictionsLoading}
-        style={{
-          width: "40%",
-          position: "absolute",
-          zIndex: "2",
-          backgroundColor: "white",
-          left: "50%",
-          borderRadius: "30px",
-          color: "#ED411A",
-          top: "28%",
-        }}
-        className="inputbox"
-      />
-    </div>
+    <Autocomplete
+      disablePortal
+      id="google-map-demo"
+      options={placePredictions}
+      onInputChange={(event, value) => {
+        getPlacePredictions({ input: value });
+      }}
+      onChange={(_, value) => onPress(value)}
+      sx={{
+        width: 200,
+        "& .MuiInputBase-root": { borderRadius: "30px" },
+      }}
+      getOptionLabel={(option) =>
+        typeof option === "string" ? option : option.description
+      }
+      filterOptions={(x) => x}
+      isOptionEqualToValue={(option) => option.place_id === place?.place_id}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder="Busca una dirección"
+          label="Selecciona la ubicación de interés"
+          sx={{
+            "& label.MuiInputLabel-root": {
+              color: "#000000", // Cambia el color del label a rojo
+            },
+          }}
+        />
+      )}
+      noOptionsText="Ingresa la dirección"
+      loading={isPlacePredictionsLoading}
+      style={{
+        width: "100%",
+        backgroundColor: "white",
+        borderRadius: "30px",
+        color: "#000000",
+      }}
+      className="inputbox"
+    />
   );
 };
 

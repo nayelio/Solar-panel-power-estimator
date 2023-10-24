@@ -8,6 +8,7 @@ export type Position = {
 
 type PositionContextType = {
   position: Position | null;
+
   setPosition: React.Dispatch<React.SetStateAction<Position | null>>;
   area: number;
   setArea: React.Dispatch<React.SetStateAction<number>>;
@@ -21,6 +22,7 @@ type PositionContextType = {
 
 const PositionContext = createContext<PositionContextType>({
   position: null,
+
   setPosition: () => {},
   area: 0,
   setArea: () => {},

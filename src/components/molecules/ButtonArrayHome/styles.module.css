@@ -1,0 +1,33 @@
+.buttonArray {
+  display: flex;
+  width: 40%;
+  align-items: flex-end;
+  align-content: flex-end;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-self: flex-end;
+  justify-items: center;
+  justify-content: flex-end;
+}
+.container {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  align-items: flex-end;
+  flex-direction: column;
+  padding-right: 5%;
+  align-self: center;
+}
+.pContainer {
+  height: 100%;
+  width: 15%;
+}
+.p {
+  color: #000;
+  text-align: right;
+  font-family: Andada Pro;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

@@ -12,20 +12,22 @@ type RateContextType = {
   consume: number | null;
   price: number | null;
   power: number | null;
-  panelToUse:
+  sunByDay: number | null;
+  panelsRealValue:
     | {
+        area: number;
+
         value: number;
         Id: number;
         Power: number;
         Price: number;
-      }
-    | null
+      }[]
     | undefined;
   systemPrice: number | null;
+  panelQuantity: number | null;
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
   setConsume: React.Dispatch<React.SetStateAction<number | null>>;
   setKwhPrice: React.Dispatch<React.SetStateAction<number | null>>;
-
   setSunByDay: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
@@ -34,9 +36,11 @@ const RateContext = createContext<RateContextType>({
   streetLightingRate: null,
   kwhPrice: 944.21,
   consume: null,
+  sunByDay: 0,
   power: 0,
   price: 0,
-  panelToUse: null,
+  panelQuantity: null,
+  panelsRealValue: undefined,
   systemPrice: 0,
   setTown: () => {},
   setConsume: () => {},
@@ -51,7 +55,6 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const [price, setPrice] = useState<number | null>(null);
   const [power, setPower] = useState<number | null>(null);
   const [sunByDay, setSunByDay] = useState<number | null>(null);
-  const { panels } = usePosition();
 
   const { data: listPanels } = useQuery({
     queryFn: () => request<Panels[]>(ApiEnum.PanelsDB),
@@ -78,33 +81,38 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
 
   const panelsRealValue = listPanels?.map((panel) => ({
     ...panel,
-    value: (panel.Power / 1000) * 0.2 * (sunByDay ?? 0) * 30,
+    value:
+      (panel.Power / 1000) *
+      panel.Efficiency *
+      (sunByDay ?? 0) *
+      30 *
+      (panel.Width * panel.Height),
+    area: panel.Width * panel.Height,
   }));
-
-  const panelToUse = useMemo(() => {
+  console.log(panelsRealValue);
+  const panelQuantity = useMemo(() => {
     if (consume == null) return null;
-    const minPower = consume / panels.length;
-    return panelsRealValue
-      ?.filter((panel) => panel.value > minPower)
-      .sort((panel1, panel2) => panel1.Price - panel2.Price)?.[0];
-  }, [consume, panels.length, panelsRealValue]);
-  console.log(panelToUse);
+    return Math.ceil((consume * 1.3) / panelsRealValue?.[2]?.value!);
+  }, [consume, panelsRealValue]);
 
   const systemPrice = useMemo(() => {
-    const priceEstimate = (panelToUse?.Price ?? 0) * panels.length;
+    const priceEstimate = panelsRealValue?.[0]?.Price! * (panelQuantity ?? 0);
     return priceEstimate;
-  }, [panelToUse?.Price, panels.length]);
+  }, [panelQuantity, panelsRealValue]);
+
   const value = useMemo(
     () => ({
       securityRate,
       streetLightingRate,
       kwhPrice,
-      panelToUse,
       listPanels,
       price,
       power,
+      sunByDay,
       consume,
       systemPrice,
+      panelsRealValue,
+      panelQuantity,
       setTown,
       setConsume,
       setKwhPrice,
@@ -114,8 +122,10 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       securityRate,
       streetLightingRate,
       kwhPrice,
+      sunByDay,
       systemPrice,
-      panelToUse,
+      panelQuantity,
+      panelsRealValue,
       listPanels,
       price,
       power,

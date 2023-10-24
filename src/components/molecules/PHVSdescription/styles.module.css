@@ -6,13 +6,13 @@
 }
 .container {
   border-radius: 30px;
-  border: 3px solid #ed411a;
-  background: #fff3f3;
+  border: 3px solid #fff;
+  background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  width: 50%;
-  height: 100%;
+  width: 30%;
+  height: 80%;
   padding: 2%;
   justify-self: center;
   align-self: center;
@@ -22,7 +22,7 @@
   color: #000;
   text-align: center;
   font-family: Andada Pro;
-  font-size: 30px;
+  font-size: 15px;
   font-style: thin;
   font-weight: 500;
   line-height: normal;
@@ -35,10 +35,10 @@
 }
 
 .p {
-  color: rgba(255, 48, 0, 0.87);
+  color: #324e76;
   text-align: center;
   font-family: Andada Pro;
-  font-size: 30px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;

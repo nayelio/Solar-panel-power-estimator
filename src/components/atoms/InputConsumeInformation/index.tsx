@@ -1,7 +1,9 @@
 import { useRate } from "@/contexts/RateContext";
 import { InputAdornment, TextField } from "@mui/material";
 import styles from "./styles.module.css";
-export default function InputConsumeInformation() {
+import React, { SetStateAction } from "react";
+
+const InputConsumeInformation = () => {
   const {
     consume,
     setConsume,
@@ -10,6 +12,7 @@ export default function InputConsumeInformation() {
     securityRate,
     streetLightingRate,
   } = useRate();
+
   const kWhValue = 944.2793;
 
   return (
@@ -17,14 +20,20 @@ export default function InputConsumeInformation() {
       <TextField
         label="Consumo mensual"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "100%", borderRadius: "30%" }}
-        value={consume ?? ""}
+        sx={{
+          m: 1,
+          width: "90%",
+          borderRadius: "30px",
+          backgroundColor: "white",
+          "& .MuiInputBase-root": {
+            borderRadius: "30px",
+            borderColor: "black",
+          },
+        }}
+        value={consume?.toString()}
         type="number"
         onChange={(e) => {
           const value = parseInt(e.target.value, 10);
-          console.log({
-            value,
-          });
           if (isNaN(value)) {
             setConsume(0);
           } else {
@@ -39,8 +48,17 @@ export default function InputConsumeInformation() {
       <TextField
         label="Valor del kW/hr"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "100%" }}
-        value={kwhPrice ?? ""}
+        sx={{
+          m: 1,
+          width: "90%",
+          borderRadius: "30px",
+          backgroundColor: "white",
+          "& .MuiInputBase-root": {
+            borderRadius: "30px",
+            borderColor: "black",
+          },
+        }}
+        value={kwhPrice?.toString()}
         type="number"
         onChange={(e) => {
           const value = parseInt(e.target.value, 10);
@@ -58,4 +76,6 @@ export default function InputConsumeInformation() {
       />
     </div>
   );
-}
+};
+
+export default InputConsumeInformation;

@@ -1,11 +1,26 @@
+import { Button } from "@mui/material";
 import styles from "./styles.module.css";
 
 const NavBar = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.button}>
-        <span className={styles.text}>Sobre nosotros</span>
-      </div>
+      <Button
+        color="primary"
+        disabled={false}
+        size="small"
+        variant="contained"
+        sx={{
+          width: "12%",
+          height: "100%",
+          borderRadius: "30px",
+          backgroundColor: "#fff",
+          color: "black",
+        }}
+        onClick={() => {}}
+      >
+        {" "}
+        Sobre nosotros
+      </Button>
     </div>
   );
 };

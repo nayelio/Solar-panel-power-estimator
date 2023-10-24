@@ -13,6 +13,7 @@ import React, { useEffect } from "react";
 import { Position } from "@/pages/_index";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
+import { Skeleton } from "@mui/material";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,8 +30,8 @@ export type Data = {
 
 const Chart = () => {
   const [data, setData] = useState<Data | null>(null);
-  const { position } = usePosition();
-  const { setSunByDay } = useRate();
+  const { position, area } = usePosition();
+  const { setSunByDay, panelQuantity, panelsRealValue, sunByDay } = useRate();
 
   const [loading, setLoading] = useState(false);
   const barRef = React.createRef();
@@ -78,18 +79,24 @@ const Chart = () => {
     }
     const wattsPerDay =
       Object.values(mediaByMonth).reduce((acc, curr) => acc + curr, 0) / 12;
-
+    console.log(mediaByMonth); // console
     setSunByDay(wattsPerDay);
 
     setData({
       labels,
       datasets: [
         {
-          label: "Potencia",
+          label: "Potencia promedio generada por mes",
           data: Object.keys(mediaByMonth)
             .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
-            .map((item) => mediaByMonth[item]),
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+            .map(
+              (item) =>
+                mediaByMonth[item] *
+                (panelsRealValue?.[2]?.value! *
+                  panelQuantity! *
+                  panelsRealValue?.[2]?.area!)
+            ),
+          backgroundColor: "#7DAFB0",
         },
       ],
     });
@@ -108,18 +115,25 @@ const Chart = () => {
       },
       title: {
         display: true,
-        text: "Power estimator data",
+        text: "Potencia generada por mes",
       },
     },
   };
 
-  // if (!data) return null;
-  return null;
+  if (!data) return null;
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "40%",
+        padding: "2%",
+        backgroundColor: "#fff",
+        borderRadius: "30px",
+      }}
+    >
+      {data ? <Bar options={options} data={data} /> : <Skeleton />}
+    </div>
+  );
 };
 
 export default Chart;
-// return (
-//   <div style={{ height: "100%", width: "40%", padding: "100px" }}>
-//     <Bar options={options} data={data} />
-//   </div>
-// );

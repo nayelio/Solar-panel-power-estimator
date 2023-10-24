@@ -2,8 +2,10 @@ import { usePosition } from "@/contexts/PositionContext";
 import {
   DrawingManagerF,
   GoogleMap,
+  Libraries,
   MarkerF,
   RectangleF,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import { useEffect } from "react";
 
@@ -15,7 +17,7 @@ const defaultPosition = { lat: 10.96854, lng: -74.78132 };
 
 const mapStyles = {
   width: "100%", // Ancho del mapa
-  height: "80%", // Altura del mapa
+  height: "100%", // Altura del mapa
   backgroundColor: "#f0f0f0", // Color de fondo del mapa
   border: "1px solid #ccc", // Borde del mapa
   borderRadius: "30px", // Radio de borde del mapa
@@ -26,6 +28,7 @@ const mapStyles = {
 export default function MapContainer({ enableDraw }: Props) {
   const { position, panels, setPanels, setPerimeter, setPolygon, setArea } =
     usePosition();
+
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -44,16 +47,10 @@ export default function MapContainer({ enableDraw }: Props) {
 
   return (
     <div
-      className="mapcontainer"
       style={{
-        width: "95%",
-        alignSelf: "center",
-        height: "90%",
-        display: "flex",
-        flexDirection: "column",
+        width: "100%",
+        height: "100%",
         borderRadius: "20px",
-        position: "absolute",
-        marginBlockStart: "2%",
       }}
     >
       <GoogleMap

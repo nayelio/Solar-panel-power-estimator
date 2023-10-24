@@ -1,5 +1,5 @@
-import Chart, { Data } from "@/components/atoms/Chart";
-import InputConsumeInformation from "@/components/atoms/InputConsume";
+import Chart from "@/components/atoms/Chart";
+import InputConsumeInformation from "@/components/atoms/InputConsumeInformation";
 import Steper from "@/components/atoms/Stepper";
 import { PositionProvider, usePosition } from "@/contexts/PositionContext";
 import { Libraries, useJsApiLoader } from "@react-google-maps/api";
@@ -182,9 +182,7 @@ function Index() {
               gap: "10%",
             }}
           >
-            <div className={styles.input}>
-              <InputConsumeInformation />
-            </div>
+            <div className={styles.input}></div>
 
             <div className={styles.Map}>
               <MapContainer enableDraw={false} />

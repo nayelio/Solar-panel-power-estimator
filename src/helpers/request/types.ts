@@ -25,6 +25,9 @@ export type Panels = {
   Id: number;
   Power: number;
   Price: number;
+  Efficiency: number;
+  Width: number;
+  Height: number;
 };
 export type Inverters = {
   Id: number;
