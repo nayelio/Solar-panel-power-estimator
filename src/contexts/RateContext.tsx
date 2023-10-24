@@ -111,8 +111,8 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   }, [panelQuantity, panelsRealValue]);
 
   const inverterToUse = listInverter?.map((inverter) => ({
-    ...inverterToUse,
-    value,
+    ...inverter,
+    value: inverter.Power,
   }));
   const value = useMemo(
     () => ({

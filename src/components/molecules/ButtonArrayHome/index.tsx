@@ -13,9 +13,13 @@ export default function ButtonArrayHome() {
             usadas
           </p>
         ) : inform === 2 ? (
-          <p className={styles.p}>Hol2a</p>
+          <p className={styles.p}>
+            El sistema generado se adapta a tus condiciones reales
+          </p>
         ) : inform === 3 ? (
-          <p className={styles.p}>Hol2rra</p>
+          <p className={styles.p}>
+            Puedes consultar cuando quieras y donde quieras
+          </p>
         ) : null}
       </div>
       <div className={styles.buttonArray}>
