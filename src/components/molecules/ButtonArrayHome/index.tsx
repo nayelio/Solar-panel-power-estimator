@@ -31,11 +31,12 @@ export default function ButtonArrayHome() {
           sx={{
             width: "30%",
             height: "70%",
-            borderRadius: "30px",
+            borderRadius: "10px",
             backgroundColor: "#FFF",
             color: "BLACK",
             fontSize: "13px",
             border: "1px solid #FFF",
+            "&:hover": { backgroundColor: "#7DAFB0", color: "white" },
           }}
           onClick={() => {
             setInform(() => 1);
@@ -52,11 +53,12 @@ export default function ButtonArrayHome() {
           sx={{
             width: "30%",
             height: "70%",
-            borderRadius: "30px",
+            borderRadius: "10px",
             backgroundColor: "#FFF",
             color: "BLACK",
             fontSize: "13px",
             border: "1px solid #FFF",
+            "&:hover": { backgroundColor: "#7DAFB0", color: "white" },
           }}
           onClick={() => {
             setInform(() => 2);
@@ -73,11 +75,13 @@ export default function ButtonArrayHome() {
           sx={{
             width: "70%",
             height: "70%",
-            borderRadius: "30px",
+            borderRadius: "10px",
             backgroundColor: "#fff",
             color: "#000",
             fontSize: "13px",
             border: "1px solid #fff",
+            "&:hover": { backgroundColor: "#7DAFB0", color: "white" },
+            "&:active , &:focus": { backgroundColor: "7DAFB0", color: "white" },
           }}
           onClick={() => {
             setInform(() => 3);

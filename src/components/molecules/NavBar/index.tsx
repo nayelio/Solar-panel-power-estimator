@@ -12,7 +12,7 @@ const NavBar = () => {
         sx={{
           width: "12%",
           height: "100%",
-          borderRadius: "30px",
+          borderRadius: "10px",
           backgroundColor: "#fff",
           color: "black",
         }}

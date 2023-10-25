@@ -32,7 +32,7 @@ export default function Buttons(props: Props) {
         sx={{
           width: "10%",
           height: "50%",
-          borderRadius: "30px",
+          borderRadius: "10px",
           backgroundColor: "white",
           color: "black",
           border: "1px solid",
@@ -51,7 +51,7 @@ export default function Buttons(props: Props) {
         sx={{
           width: "10%",
           height: "50%",
-          borderRadius: "30px",
+          borderRadius: "10px",
           backgroundColor: "#000",
           color: "white",
           border: "1px solid",
