@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import styles from "./styles.module.css";
 import { useState } from "react";
-export default function ButtonArrayHome() {
+
+const ButtonArrayHome = () => {
   const [inform, setInform] = useState(1);
 
   return (
@@ -93,4 +94,6 @@ export default function ButtonArrayHome() {
       </div>
     </div>
   );
-}
+};
+
+export default ButtonArrayHome;

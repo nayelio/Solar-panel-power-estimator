@@ -1,4 +1,5 @@
 import Home from "@/components/organisms/Home";
+import { PanelProvider } from "@/contexts/PanelsContext";
 import { PositionProvider } from "@/contexts/PositionContext";
 import { RateProvider } from "@/contexts/RateContext";
 import { Libraries, useJsApiLoader } from "@react-google-maps/api";
@@ -19,13 +20,15 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <PositionProvider>
         <RateProvider>
-          <Home />
-          <style jsx global>{`
-            body {
-              margin: 0px;
-              padding: 0px;
-            }
-          `}</style>
+          <PanelProvider>
+            <Home />
+            <style jsx global>{`
+              body {
+                margin: 0px;
+                padding: 0px;
+              }
+            `}</style>
+          </PanelProvider>
         </RateProvider>
       </PositionProvider>
     </QueryClientProvider>

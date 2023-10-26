@@ -10,12 +10,13 @@ import { Position, usePosition } from "@/contexts/PositionContext";
 import PHVSdescription from "../PHVSdescription";
 import Chart from "@/components/atoms/Chart";
 import { useRate } from "@/contexts/RateContext";
+import Alert from "@/components/atoms/Alert";
 
 const InfoLocation = () => {
   const [step, setStep] = useState(0);
   const [showInput, setShowInput] = useState(true);
 
-  const { setPosition, panels, setArea } = usePosition();
+  const { setPosition, setArea } = usePosition();
   const { consume, setConsume, setKwhPrice } = useRate();
   return (
     <div className={styles.container}>
@@ -46,6 +47,7 @@ const InfoLocation = () => {
           </div>
         ) : step === 2 ? (
           <div className={styles.step1Container}>
+            <Alert />
             <div className={styles.mapContainer}>
               <MapContainer enableDraw={true} />
             </div>
@@ -53,7 +55,7 @@ const InfoLocation = () => {
         ) : (
           <div className={styles.step3Container}>
             <div className={styles.step3rowContainer}>
-              <PHVSdescription panels={panels} />
+              <PHVSdescription />
               <Chart />
             </div>
           </div>

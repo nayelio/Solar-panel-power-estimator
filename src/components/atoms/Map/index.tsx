@@ -1,13 +1,14 @@
+import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
+import { useRate } from "@/contexts/RateContext";
+import { generatePanels } from "@/helpers/panels";
 import {
   DrawingManagerF,
   GoogleMap,
-  Libraries,
   MarkerF,
-  RectangleF,
-  useJsApiLoader,
+  PolygonF,
 } from "@react-google-maps/api";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 interface Props {
   enableDraw: boolean;
@@ -25,25 +26,10 @@ const mapStyles = {
   // Otras propiedades y valores personalizados según tus necesidades
 };
 
-export default function MapContainer({ enableDraw }: Props) {
-  const { position, panels, setPanels, setPerimeter, setPolygon, setArea } =
+const MapContainer = ({ enableDraw }: Props) => {
+  const { position, setPerimeter, setPolygons, setArea, polygons } =
     usePosition();
-
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        function (positionFromPermission) {
-          const latitude = positionFromPermission.coords.latitude;
-          const longitude = positionFromPermission.coords.longitude;
-        },
-        function (error) {
-          console.error("Error al obtener la ubicación: " + error.message);
-        }
-      );
-    } else {
-      console.error("La geolocalización no es compatible en este navegador.");
-    }
-  }, []);
+  const { panels } = usePanel();
 
   return (
     <div
@@ -61,17 +47,36 @@ export default function MapContainer({ enableDraw }: Props) {
         // Establece la vista por defecto como satelital
       >
         {position != null && <MarkerF position={position} />}
-
         {panels.map((item, index) => (
-          <RectangleF key={index} bounds={item} />
+          <PolygonF
+            key={index}
+            paths={item}
+            options={{
+              strokeColor: "#0A1DEE",
+              fillColor: "#65548F",
+              strokeWeight: 2,
+            }}
+          />
+        ))}
+        {polygons.map((item, index) => (
+          <PolygonF
+            key={index}
+            paths={item.getPaths()}
+            options={{
+              fillColor: "#5D5CB6",
+              strokeWeight: 0,
+            }}
+          />
         ))}
         {enableDraw ? (
           <DrawingManagerF
+            key={0}
             drawingMode={google.maps.drawing.OverlayType.POLYGON}
             options={{
               polygonOptions: {
                 geodesic: true,
                 strokeWeight: 2,
+                strokeColor: "#353DCB",
               },
               drawingControl: true,
               drawingControlOptions: {
@@ -80,85 +85,17 @@ export default function MapContainer({ enableDraw }: Props) {
               },
             }}
             onPolygonComplete={(e) => {
-              setPolygon((prev) => [...prev, e]);
-
+              setPolygons((prev) => [...prev, e]);
               setArea(google.maps.geometry.spherical.computeArea(e.getPath()));
               setPerimeter(
                 google.maps.geometry.spherical.computeLength(e.getPath())
               );
-              const items = fillPolygonWithSquares(e);
-
-              setPanels((prev) => [...prev, ...items]);
             }}
           />
         ) : null}
       </GoogleMap>
     </div>
   );
-}
+};
 
-var height = 2;
-var width = 1;
-
-function fillPolygonWithSquares(polygon: google.maps.Polygon) {
-  var polygonBounds = new google.maps.LatLngBounds();
-  polygon.getPaths().forEach(function (path) {
-    path.forEach(function (latlng) {
-      polygonBounds.extend(latlng);
-    });
-  });
-
-  var polygonArea = google.maps.geometry.spherical.computeArea(
-    polygon.getPath()
-  );
-
-  var rectWidthInSqMeters = width;
-  var rectHeightInSqMeters = height;
-
-  var numRectsWidth = Math.ceil(polygonArea / rectWidthInSqMeters);
-  var numRectsHeight = Math.ceil(polygonArea / rectHeightInSqMeters);
-
-  var latIncrement = rectHeightInSqMeters / 111111; // 1 grado de latitud es aproximadamente 111111 metros
-
-  var panels = [];
-
-  for (var i = 0; i < numRectsHeight; i++) {
-    for (var j = 0; j < numRectsWidth; j++) {
-      var lat = polygonBounds.getSouthWest().lat() + i * latIncrement;
-      var lng =
-        polygonBounds.getSouthWest().lng() +
-        j * (rectWidthInSqMeters / (111111 * Math.cos((lat * Math.PI) / 180)));
-
-      var rectangleBounds = {
-        north: lat + latIncrement,
-        south: lat,
-        east:
-          lng +
-          rectWidthInSqMeters / (111111 * Math.cos((lat * Math.PI) / 180)),
-        west: lng,
-      };
-      if (
-        google.maps.geometry.poly.containsLocation(
-          new google.maps.LatLng(lat, lng),
-          polygon
-        ) &&
-        google.maps.geometry.poly.containsLocation(
-          new google.maps.LatLng(rectangleBounds.north, rectangleBounds.east),
-          polygon
-        ) &&
-        google.maps.geometry.poly.containsLocation(
-          new google.maps.LatLng(rectangleBounds.north, rectangleBounds.west),
-          polygon
-        ) &&
-        google.maps.geometry.poly.containsLocation(
-          new google.maps.LatLng(rectangleBounds.south, rectangleBounds.east),
-          polygon
-        )
-      ) {
-        panels.push(rectangleBounds);
-      }
-    }
-  }
-
-  return panels;
-}
+export default MapContainer;

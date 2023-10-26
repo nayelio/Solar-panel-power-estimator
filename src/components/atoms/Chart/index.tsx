@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,46 +27,31 @@ export type Data = {
   labels: string[];
   datasets: [{ label: string; data: number[]; backgroundColor: string }];
 };
-
+const labels = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
 const Chart = () => {
-  const [data, setData] = useState<Data | null>(null);
-  const { position, area } = usePosition();
-  const { setSunByDay, panelQuantity, panelsRealValue, sunByDay } = useRate();
+  const { position, sunData } = usePosition();
+  const { panelQuantity, panelsRealValue, sunByDay } = useRate();
 
-  const [loading, setLoading] = useState(false);
-  const barRef = React.createRef();
-
-  const labels = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-  const onSearch = async () => {
-    setLoading(true);
-    if (position === null) return;
-    const rest = await fetch(
-      `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2022&latitude=${position.lat}&longitude=${position.lng}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`
-    );
-    const response = await rest.json();
-
-    if (!response) return alert("Error");
-    const list = response.properties.parameter["ALLSKY_SFC_SW_DWN"];
-
+  const data = useMemo(() => {
     let valuesByMonth: Record<string, number[]> = {};
 
-    for (var name in list) {
+    for (var name in sunData) {
       const mes = name.substring(4, 6);
       const prevValue = valuesByMonth[mes] ?? [];
-      valuesByMonth[mes] = [...prevValue, list[name]];
+      valuesByMonth[mes] = [...prevValue, sunData[name]];
     }
 
     let mediaByMonth: Record<string, number> = {};
@@ -77,12 +62,8 @@ const Chart = () => {
       );
       mediaByMonth[mes] = totalByMonth / valuesByMonth[mes].length;
     }
-    const wattsPerDay =
-      Object.values(mediaByMonth).reduce((acc, curr) => acc + curr, 0) / 12;
-    console.log(mediaByMonth); // console
-    setSunByDay(wattsPerDay);
 
-    setData({
+    return {
       labels,
       datasets: [
         {
@@ -101,14 +82,9 @@ const Chart = () => {
           backgroundColor: "#7DAFB0",
         },
       ],
-    });
+    };
+  }, [panelQuantity, panelsRealValue, sunData]);
 
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    onSearch();
-  }, [position]); //if position changed onSearch will be executed
   const options = {
     responsive: true,
     plugins: {
@@ -122,7 +98,7 @@ const Chart = () => {
     },
   };
 
-  if (!data) return null;
+  if (!data) return <Skeleton variant="rectangular" width={800} height={400} />;
   return (
     <div
       style={{

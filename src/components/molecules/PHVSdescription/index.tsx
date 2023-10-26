@@ -2,17 +2,23 @@ import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { RectangleProps } from "@react-google-maps/api";
 import styles from "./styles.module.css";
+import { usePanel } from "@/contexts/PanelsContext";
 
-interface props {
-  panels: RectangleProps["bounds"][];
-}
-export default function PHVSdescription(Props: props) {
-  const { systemPrice, panelsRealValue, panelQuantity, sunByDay } = useRate();
+export default function PHVSdescription() {
+  const { systemPrice, panelsRealValue, panelQuantity, sunByDay, panelToUse } =
+    useRate();
+  const { inverterToUse, panels } = usePanel();
 
   return (
     <div className={styles.container}>
-      <p className={styles.system}>Tu sistema se veria asi:</p>
-
+      <p className={styles.system}>Caracteristicas del sistema</p>
+      <div className={styles.pContainer}>
+        <p className={styles.pp}>
+          Tamaño de la planta
+          <br></br>
+          <p className={styles.p}>{panels.length * panelToUse?.Power!} kWp</p>
+        </p>
+      </div>
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           Costo estimado del sistema
@@ -52,7 +58,8 @@ export default function PHVSdescription(Props: props) {
                   sunByDay! *
                   0.77 *
                   365
-              )}
+              )}{" "}
+              kwh
             </p>
             Potencia generada al año
           </p>
