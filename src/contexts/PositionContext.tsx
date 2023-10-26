@@ -1,8 +1,7 @@
-import { generatePanels } from "@/helpers/panels";
-import React, { createContext, useContext, useMemo, useState } from "react";
-import request, { ApiEnum } from "@/helpers/request";
-import { useQuery } from "@tanstack/react-query";
+import request from "@/helpers/request";
 import { SunData } from "@/helpers/request/types";
+import { useQuery } from "@tanstack/react-query";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 export type Position = {
   lat: number;

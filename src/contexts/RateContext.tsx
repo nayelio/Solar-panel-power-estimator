@@ -1,11 +1,6 @@
 import { getRate } from "@/helpers";
-import request, { ApiEnum } from "@/helpers/request";
-import {
-  Inverters,
-  Panels,
-  SecurityRate,
-  StreetLighting,
-} from "@/helpers/request/types";
+import request, { myApis } from "@/helpers/request";
+import { Panels, SecurityRate, StreetLighting } from "@/helpers/request/types";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { usePosition } from "./PositionContext";
@@ -61,18 +56,18 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const [power, setPower] = useState<number | null>(null);
   const { sunData } = usePosition();
   const { data: listPanels } = useQuery({
-    queryFn: () => request<Panels[]>(ApiEnum.PanelsDB),
-    queryKey: [ApiEnum.PanelsDB],
+    queryFn: () => request<Panels[]>(myApis.panelsDB),
+    queryKey: [myApis.panelsDB],
   });
 
   const { data: securityData } = useQuery({
-    queryFn: () => request<SecurityRate[]>(ApiEnum.SecurityRates),
-    queryKey: [ApiEnum.SecurityRates],
+    queryFn: () => request<SecurityRate[]>(myApis.securityRates),
+    queryKey: [myApis.securityRates],
   });
 
   const { data: streetLightingData } = useQuery({
-    queryFn: () => request<StreetLighting[]>(ApiEnum.StreetLightings),
-    queryKey: [ApiEnum.StreetLightings],
+    queryFn: () => request<StreetLighting[]>(myApis.streetLightings),
+    queryKey: [myApis.streetLightings],
   });
 
   const securityRate = useMemo(() => {

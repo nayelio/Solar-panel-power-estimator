@@ -1,13 +1,13 @@
 import { generatePanels } from "@/helpers/panels";
-import React, { createContext, useContext, useMemo, useState } from "react";
-import request, { ApiEnum } from "@/helpers/request";
+import request, { myApis } from "@/helpers/request";
+import { Inverters } from "@/helpers/request/types";
 import { useQuery } from "@tanstack/react-query";
-import { Inverters, SunData } from "@/helpers/request/types";
-import { useRate } from "./RateContext";
+import React, { createContext, useContext, useMemo } from "react";
 import { usePosition } from "./PositionContext";
+import { useRate } from "./RateContext";
 
 type PanelContextType = {
-  inverterToUse: Inverters | null | undefined;
+  inverterToUse: Inverters | null;
   panels: {
     lat: number;
     lng: number;
@@ -30,18 +30,18 @@ export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
     [panelQuantity, polygons]
   );
   const { data: listInverter } = useQuery({
-    queryFn: () => request<Inverters[]>(ApiEnum.InverterDB),
-    queryKey: [ApiEnum.InverterDB],
+    queryFn: () => request<Inverters[]>(myApis.inverterDB),
+    queryKey: [myApis.inverterDB],
   });
 
   const inverterToUse = useMemo(() => {
     if (!panelToUse) return null;
     const systemSize = panels.length * 0.8 * panelToUse.Power;
     console.log(systemSize);
-    const selectedInverter = listInverter!
-      .sort((a, b) => a.Power - b.Power)
+    const selectedInverter = listInverter
+      ?.sort((a, b) => a.Power - b.Power)
       .find((inverter) => inverter.Power > systemSize);
-    return selectedInverter;
+    return selectedInverter ?? null;
   }, [listInverter, panelToUse, panels.length]);
 
   const value = useMemo(

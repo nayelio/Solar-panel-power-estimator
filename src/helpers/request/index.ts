@@ -1,14 +1,13 @@
-import { usePosition } from "@/contexts/PositionContext";
+const url = process.env.NEXT_PUBLIC_URL_API;
+const api = `${url}/api/services`;
 
-const api = "http://localhost:3003/api/services";
-
-export enum ApiEnum {
-  Towns = `${api}/towns`,
-  StreetLightings = `${api}/streetLighting`,
-  SecurityRates = `${api}/securityRate`,
-  PanelsDB = `${api}/phvsPanels`,
-  InverterDB = `${api}/inverters`,
-}
+export const myApis = {
+  towns: `${api}/towns`,
+  streetLightings: `${api}/streetLighting`,
+  securityRates: `${api}/securityRate`,
+  panelsDB: `${api}/phvsPanels`,
+  inverterDB: `${api}/inverters`,
+};
 
 const request = async <T>(url: string): Promise<T> => {
   const res = await fetch(url);
