@@ -14,7 +14,7 @@ interface Props {
   enableDraw: boolean;
 }
 
-const defaultPosition = { lat: 10.96854, lng: -74.78132 };
+const defaultPosition = { lat: 11.0190513, lng: -74.8537228 };
 
 const mapStyles = {
   width: "100%", // Ancho del mapa

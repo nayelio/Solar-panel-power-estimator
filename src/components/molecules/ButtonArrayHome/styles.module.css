@@ -1,14 +1,3 @@
-.buttonArray {
-  display: flex;
-  width: 40%;
-  align-items: flex-end;
-  align-content: flex-end;
-  gap: 7px;
-  flex-wrap: wrap;
-  justify-self: flex-end;
-  justify-items: center;
-  justify-content: flex-end;
-}
 .container {
   display: flex;
   width: 100%;
@@ -23,11 +12,11 @@
   width: 25%;
 }
 .p {
-  color: #fff;
+  color: #000;
   text-align: right;
   font-family: Andada Pro;
   font-size: 28px;
-  font-style: normal;
+  font-style: italic;
   font-weight: 400;
   line-height: normal;
 }

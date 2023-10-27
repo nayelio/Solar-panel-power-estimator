@@ -1,3 +1,4 @@
+import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { Skeleton } from "@mui/material";
@@ -41,7 +42,7 @@ const labels = [
 ];
 const Chart = () => {
   const { position, sunData } = usePosition();
-  const { panelQuantity, panelsRealValue, sunByDay } = useRate();
+  const { inverterToUse } = usePanel();
 
   const data = useMemo(() => {
     let valuesByMonth: Record<string, number[]> = {};
@@ -65,23 +66,15 @@ const Chart = () => {
       labels,
       datasets: [
         {
-          label: "Potencia promedio generada por mes",
+          label: "Energía promedio generada por mes (kWh)",
           data: Object.keys(mediaByMonth)
             .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
-            .map(
-              (item) =>
-                mediaByMonth[item] *
-                ((panelsRealValue?.[2]?.Power! / 1000) *
-                  panelsRealValue?.[2]?.Efficiency! *
-                  panelQuantity! *
-                  panelsRealValue?.[2]?.area!) *
-                30
-            ),
+            .map((item) => mediaByMonth[item] * inverterToUse?.Power! * 30),
           backgroundColor: "#7DAFB0",
         },
       ],
     };
-  }, [panelQuantity, panelsRealValue, sunData]);
+  }, [inverterToUse?.Power, sunData]);
 
   const options = {
     responsive: true,

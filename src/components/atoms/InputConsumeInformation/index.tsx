@@ -19,14 +19,15 @@ const InputConsumeInformation = () => {
     <div className={styles.box}>
       <TextField
         label="Consumo mensual"
-        id="outlined-start-adornment"
+        id="filled-start-adornment"
+        variant="filled"
         sx={{
           m: 1,
           width: "90%",
-          borderRadius: "30px",
+          borderRadius: "10px",
           backgroundColor: "white",
           "& .MuiInputBase-root": {
-            borderRadius: "30px",
+            borderRadius: "10px",
             borderColor: "black",
           },
         }}
@@ -41,20 +42,21 @@ const InputConsumeInformation = () => {
           }
         }}
         InputProps={{
-          startAdornment: <InputAdornment position="start">kW</InputAdornment>,
+          startAdornment: <InputAdornment position="start">kWh</InputAdornment>,
         }}
       />
 
       <TextField
-        label="Valor del kW/hr"
-        id="outlined-start-adornment"
+        label="Valor del la tarifa"
+        id="filled-start-adornment"
+        variant="filled"
         sx={{
           m: 1,
           width: "90%",
-          borderRadius: "30px",
+          borderRadius: "10px",
           backgroundColor: "white",
           "& .MuiInputBase-root": {
-            borderRadius: "30px",
+            borderRadius: "10px",
             borderColor: "black",
           },
         }}
@@ -70,7 +72,7 @@ const InputConsumeInformation = () => {
         }}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">kw/hr</InputAdornment>
+            <InputAdornment position="start">$/kWh</InputAdornment>
           ),
         }}
       />

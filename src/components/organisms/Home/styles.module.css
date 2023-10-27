@@ -26,8 +26,11 @@
   align-items: center;
   position: relative;
 }
+.image {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
 .h1 {
-  color: #fff;
+  color: #000;
   text-align: center;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: Alumni Sans;
@@ -38,7 +41,7 @@
   line-height: 96.8%; /* 77.44px */
 }
 .span {
-  color: #f4feff;
+  color: #185aa6;
   font-family: Alumni Sans;
   font-size: 65px;
   font-style: normal;
@@ -51,12 +54,12 @@
     color: white;
   }
   50% {
-    color: #8e8e8e;
+    color: white;
   }
   75% {
-    color: black;
+    color: #185aa6;
   }
   100% {
-    color: #8e8e8e;
+    color: white;
   }
 }

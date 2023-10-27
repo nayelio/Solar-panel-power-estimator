@@ -15,7 +15,7 @@ const PERCENTAGE_HEIGHT_MANTAINEMENT = 0.3;
 
 export const generatePanels = (
   polygon: google.maps.Polygon,
-  panelSize: PanelSize = { width: 2.465, height: 1.134 },
+  panelSize: PanelSize = { width: 1.8, height: 1.0 },
   inclination?: number
 ) => {
   var polygonBounds = new google.maps.LatLngBounds();

@@ -14,7 +14,7 @@ const NavBar = () => {
           height: "100%",
           borderRadius: "10px",
           backgroundColor: "#fff",
-          color: "black",
+          color: "#000",
         }}
         onClick={() => {}}
       >

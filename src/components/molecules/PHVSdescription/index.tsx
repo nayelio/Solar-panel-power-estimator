@@ -16,7 +16,7 @@ export default function PHVSdescription() {
         <p className={styles.pp}>
           Tamaño de la planta
           <br></br>
-          <p className={styles.p}>{panels.length * panelToUse?.Power!} kWp</p>
+          <p className={styles.p}>{panels.length * panelToUse?.Power!} Wp</p>
         </p>
       </div>
       <div className={styles.pContainer}>
@@ -38,7 +38,7 @@ export default function PHVSdescription() {
       <div className={styles.informationContainer}>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.p}>{panelQuantity}</p>
+            <p className={styles.p}>{panels.length}</p>
             Paneles
           </p>
         </div>
@@ -52,15 +52,7 @@ export default function PHVSdescription() {
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.p}>
-              {Math.ceil(
-                ((panelQuantity! * panelsRealValue?.[2].Power!) / 1000) *
-                  sunByDay! *
-                  0.77 *
-                  365
-              )}{" "}
-              kwh
-            </p>
+            <p className={styles.p}></p>
             Potencia generada al año
           </p>
         </div>

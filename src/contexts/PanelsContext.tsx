@@ -36,14 +36,15 @@ export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
 
   const inverterToUse = useMemo(() => {
     if (!panelToUse) return null;
-    const systemSize = panels.length * 0.8 * panelToUse.Power;
-    console.log(systemSize);
+    const systemSize = panels.length * 0.6 * panelToUse.Power;
+
     const selectedInverter = listInverter
       ?.sort((a, b) => a.Power - b.Power)
       .find((inverter) => inverter.Power > systemSize);
     return selectedInverter ?? null;
   }, [listInverter, panelToUse, panels.length]);
 
+  console.log(inverterToUse);
   const value = useMemo(
     () => ({
       inverterToUse,

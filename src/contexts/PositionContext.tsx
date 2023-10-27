@@ -55,7 +55,7 @@ export const PositionProvider = ({
   const sunData = useMemo(() => {
     return nasaData?.properties.parameter["ALLSKY_SFC_SW_DWN"] ?? null;
   }, [nasaData?.properties.parameter]);
-  console.log(sunData);
+
   const value = useMemo(
     () => ({
       position,
