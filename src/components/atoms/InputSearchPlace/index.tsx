@@ -25,7 +25,7 @@ const townsToSearch = [
 ];
 
 const InputSearchPlace = ({ onSelectPlace }: Props) => {
-  const { setTown } = useRate();
+  const { setTown, consume, kwhPrice } = useRate();
   const {
     placesService,
     placePredictions,
@@ -77,6 +77,10 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
       disablePortal
       id="google-map-demo"
       options={placePredictions}
+      disabled={!consume || !kwhPrice}
+      onClick={() => {
+        if (!consume || !kwhPrice) alert("¡Campo de entrada habilitado!");
+      }}
       onInputChange={(event, value) => {
         getPlacePredictions({ input: value });
       }}
@@ -84,6 +88,9 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
       sx={{
         width: 200,
         "& .MuiInputBase-root": { borderRadius: "10px" },
+        "&:disabled": {
+          backgroundColor: "red",
+        },
       }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description

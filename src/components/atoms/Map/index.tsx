@@ -44,6 +44,7 @@ const MapContainer = ({ enableDraw }: Props) => {
         zoom={23}
         center={position ?? defaultPosition}
         mapTypeId="satellite"
+
         // Establece la vista por defecto como satelital
       >
         {position != null && <MarkerF position={position} />}
@@ -68,7 +69,8 @@ const MapContainer = ({ enableDraw }: Props) => {
             }}
           />
         ))}
-        {enableDraw ? (
+
+        {enableDraw && position ? (
           <DrawingManagerF
             key={0}
             drawingMode={google.maps.drawing.OverlayType.POLYGON}

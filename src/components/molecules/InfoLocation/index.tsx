@@ -14,53 +14,45 @@ import Alert from "@/components/atoms/Alert";
 
 const InfoLocation = () => {
   const [step, setStep] = useState(0);
-  const [showInput, setShowInput] = useState(true);
-
-  const { setPosition, setArea } = usePosition();
-  const { consume, setConsume, setKwhPrice } = useRate();
+  const { position, setPosition } = usePosition();
   return (
     <div className={styles.container}>
-      <div className={styles.bgContainer}>
-        <Background />
-        <div className={styles.box}>
-          <ProgressBar step={step} setStep={setStep} />
+      <div className={styles.box}>
+        <ProgressBar step={step} setStep={setStep} />
+      </div>
+
+      <div className={styles.body}>
+        <h6 className={styles.h6}>
+          1. Ingrese datos de consumo y tarifa de energía{" "}
+        </h6>
+        <InputConsumeInformation />
+        <div className={styles.input}>
+          <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
+          <InputSearchPlace
+            onSelectPlace={(e: React.SetStateAction<Position | null>) => {
+              setPosition(e);
+            }}
+          />
         </div>
-        {step === 0 ? (
-          <div className={styles.body}>
-            <div className={styles.input}>
-              <InputConsumeInformation />
-            </div>
-          </div>
-        ) : step === 1 ? (
-          <div className={styles.step1Container}>
-            <div className={styles.mapContainer}>
-              <MapContainer enableDraw={false} />
-              <div className={styles.inputSearchPlace}>
-                <InputSearchPlace
-                  onSelectPlace={(e: React.SetStateAction<Position | null>) => {
-                    setPosition(e);
-                    setShowInput(false);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        ) : step === 2 ? (
-          <div className={styles.step1Container}>
+        <div className={styles.mapContainer}>
+          <h6 className={styles.h6}>
+            3. Dibuje el área disponible para el sistema{" "}
+          </h6>
+          <div className={styles.mapAlert}>
+            <MapContainer enableDraw={true} />
             <Alert />
-            <div className={styles.mapContainer}>
-              <MapContainer enableDraw={true} />
-            </div>
           </div>
-        ) : (
-          <div className={styles.step3Container}>
-            <div className={styles.step3rowContainer}>
-              <PHVSdescription />
-              <Chart />
-            </div>
+          <div className={styles.button}>
+            <Buttons />
           </div>
-        )}
-        <Buttons setStep={setStep} step={step} />
+        </div>
+        <div className={styles.resultContainer}>
+          <h6 className={styles.h6}>Esta es la estimación de tu sistema </h6>
+          <div className={styles.results}>
+            <PHVSdescription />
+            <Chart />
+          </div>
+        </div>
       </div>
     </div>
   );

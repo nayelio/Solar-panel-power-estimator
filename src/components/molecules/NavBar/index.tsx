@@ -10,7 +10,7 @@ const NavBar = () => {
         size="small"
         variant="contained"
         sx={{
-          width: "12%",
+          width: "20%",
           height: "100%",
           borderRadius: "10px",
           backgroundColor: "#fff",

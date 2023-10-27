@@ -4,64 +4,37 @@ import { Button } from "@mui/material";
 import { TrendingUp, WidthFull } from "@mui/icons-material";
 import { useRate } from "@/contexts/RateContext";
 import { usePosition } from "@/contexts/PositionContext";
-interface Props {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-  step: number;
-}
-export default function Buttons(props: Props) {
+import { usePanel } from "@/contexts/PanelsContext";
+
+export default function Buttons() {
   const { consume, kwhPrice } = useRate();
-  const { position, area } = usePosition();
+  const { polygons, setPolygons } = usePosition();
+  const { panels } = usePanel();
 
-  const disableNextStep = useMemo(() => {
-    if (props.step === 0 && (!consume || !kwhPrice)) return true;
-    if (props.step === 1 && !position) return true;
-    if (props.step === 2 && !area) return true;
-    if (props.step === 3) return true;
-  }, [consume, kwhPrice, props.step, position, area]);
-
-  const disablePrevStep = useMemo(() => {
-    if (props.step === 0) return true;
-  }, [props.step]);
   return (
     <div className={styles.container}>
       <Button
         color="primary"
         size="small"
         variant="outlined"
-        disabled={disablePrevStep}
         sx={{
-          width: "10%",
-          height: "50%",
+          width: "20%",
+
           borderRadius: "10px",
-          backgroundColor: "white",
-          color: "black",
-          border: "1px solid",
-        }}
-        onClick={() => {
-          props.setStep((prev) => prev - 1);
-        }}
-      >
-        Anterior
-      </Button>
-      <Button
-        color="primary"
-        size="small"
-        variant="contained"
-        disabled={disableNextStep}
-        sx={{
-          width: "10%",
-          height: "50%",
-          borderRadius: "10px",
-          backgroundColor: "#000",
+          backgroundColor: "black",
           color: "white",
           border: "1px solid",
+          "&:hover": {
+            backgroundColor: "#fff",
+          },
         }}
         onClick={() => {
-          props.setStep((prev) => prev + 1);
+          polygons.forEach((e) => e.getPath().clear());
+          setPolygons([]);
+          panels;
         }}
       >
-        {" "}
-        Siguiente
+        Borrar área
       </Button>
     </div>
   );

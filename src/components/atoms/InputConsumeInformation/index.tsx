@@ -50,6 +50,7 @@ const InputConsumeInformation = () => {
         label="Valor del la tarifa"
         id="filled-start-adornment"
         variant="filled"
+        color="primary"
         sx={{
           m: 1,
           width: "90%",

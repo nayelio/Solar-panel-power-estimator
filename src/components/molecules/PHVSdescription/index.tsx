@@ -15,23 +15,34 @@ export default function PHVSdescription() {
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           Tamaño de la planta
-          <br></br>
-          <p className={styles.p}>{panels.length * panelToUse?.Power!} Wp</p>
+          <p className={styles.p}>
+            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")} Wp
+          </p>
         </p>
       </div>
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           Costo estimado del sistema
-          <br></br>
-          <p className={styles.p}>${systemPrice}</p>
+          <p className={styles.p}>
+            $
+            {(systemPrice! + inverterToUse?.Price!).toLocaleString("de-DE", {
+              style: "currency",
+              currency: "COP",
+            })}
+          </p>
         </p>
       </div>
 
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           Ahorro por beneficio tributario
-          <br></br>
-          <p className={styles.p}>${systemPrice! * 0.5}</p>
+          <p className={styles.p}>
+            $
+            {(systemPrice! * 0.5).toLocaleString("de-DE", {
+              style: "currency",
+              currency: "COP",
+            })}
+          </p>
         </p>
       </div>
 
@@ -52,8 +63,10 @@ export default function PHVSdescription() {
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.p}></p>
-            Potencia generada al año
+            <p className={styles.p}>
+              {inverterToUse?.Power!.toLocaleString("de-DE")} WAC
+            </p>
+            Potencia del inversor
           </p>
         </div>
       </div>

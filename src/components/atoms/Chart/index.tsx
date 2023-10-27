@@ -94,7 +94,7 @@ const Chart = () => {
     <div
       style={{
         height: "100%",
-        width: "40%",
+        width: "100%",
         padding: "2%",
         backgroundColor: "#fff",
         borderRadius: "30px",
