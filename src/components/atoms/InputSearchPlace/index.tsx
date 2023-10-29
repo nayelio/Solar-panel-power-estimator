@@ -86,10 +86,14 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
       }}
       onChange={(_, value) => onPress(value)}
       sx={{
-        width: 200,
-        "& .MuiInputBase-root": { borderRadius: "10px" },
+        "& .MuiInputBase-root": { borderRadius: "10px", height: "100%" },
         "&:disabled": {
           backgroundColor: "red",
+        },
+        "& .MuiFormControl-root": { height: "100%" },
+        "& .MuiFormLabel-root": {
+          color: "#185aa6",
+          fontWeight: "bold",
         },
       }}
       getOptionLabel={(option) =>
@@ -103,16 +107,20 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
           placeholder="Busca una dirección"
           label="Selecciona la ubicación de interés"
           sx={{
-            "& label.MuiInputLabel-root": {
+            marginInlineEnd: "20px",
+            "& .label.MuiInputLabel-root": {
               color: "#000000", // Cambia el color del label a rojo
             },
+            "& .MuiFormControl-root": { height: "100%" },
+            "& .MuiInputBase-root": { height: "100%" },
           }}
         />
       )}
       noOptionsText="Ingresa la dirección"
       loading={isPlacePredictionsLoading}
       style={{
-        width: "100%",
+        width: "65%",
+        height: "80%",
         backgroundColor: "white",
         borderRadius: "10px",
         color: "#000000",

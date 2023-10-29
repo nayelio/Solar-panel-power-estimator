@@ -29,6 +29,15 @@ const InputConsumeInformation = () => {
           "& .MuiInputBase-root": {
             borderRadius: "10px",
             borderColor: "black",
+            backgroundColor: "white",
+          },
+          "& .MuiInputBase-input": {
+            borderRadius: "10px",
+            backgroundColor: "white",
+          },
+          "& .MuiFormLabel-root": {
+            color: "#185aa6",
+            fontWeight: "bold",
           },
         }}
         value={consume?.toString()}
@@ -59,6 +68,15 @@ const InputConsumeInformation = () => {
           "& .MuiInputBase-root": {
             borderRadius: "10px",
             borderColor: "black",
+            backgroundColor: "white",
+          },
+          "& .MuiInputBase-input": {
+            borderRadius: "10px",
+            backgroundColor: "white",
+          },
+          "& .MuiFormLabel-root": {
+            color: "#185aa6",
+            fontWeight: "bold",
           },
         }}
         value={kwhPrice?.toString()}

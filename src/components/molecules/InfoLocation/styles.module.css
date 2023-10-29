@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background: linear-gradient(180deg, #52a2ff 0%, rgba(82, 162, 255, 0) 100%);
+  background: #fff;
 }
 .box {
   width: 100%;
@@ -29,11 +29,11 @@
   padding: 5%;
   flex-direction: column;
   align-items: flex-start;
-  background-color: rgba(255, 255, 255, 0.44);
+  background-color: rgba(24, 90, 166, 0.5);
 }
 
 .h6 {
-  color: #000;
+  color: #fff;
   font-family: Alumni Sans;
   font-size: 17px;
   font-style: normal;
@@ -76,7 +76,10 @@
 }
 
 .input {
-  width: 70%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .button {
   display: flex;

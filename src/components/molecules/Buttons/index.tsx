@@ -19,13 +19,12 @@ export default function Buttons() {
         variant="outlined"
         sx={{
           width: "20%",
-
           borderRadius: "10px",
-          backgroundColor: "black",
-          color: "white",
+          backgroundColor: "white",
+          color: "black",
           border: "1px solid",
           "&:hover": {
-            backgroundColor: "#fff",
+            backgroundColor: "#000",
           },
         }}
         onClick={() => {

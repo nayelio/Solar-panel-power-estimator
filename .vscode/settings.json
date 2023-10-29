@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1a34c680-db92-40c4-9619-86ff37252094/resourceGroups/pf/providers/Microsoft.Web/sites/SunPowerEaseUN",
+    "appService.deploySubpath": "."
+}

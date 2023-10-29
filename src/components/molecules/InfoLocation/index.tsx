@@ -11,6 +11,7 @@ import PHVSdescription from "../PHVSdescription";
 import Chart from "@/components/atoms/Chart";
 import { useRate } from "@/contexts/RateContext";
 import Alert from "@/components/atoms/Alert";
+import InputStratum from "@/components/atoms/InputStratum";
 
 const InfoLocation = () => {
   const [step, setStep] = useState(0);
@@ -26,13 +27,14 @@ const InfoLocation = () => {
           1. Ingrese datos de consumo y tarifa de energía{" "}
         </h6>
         <InputConsumeInformation />
+        <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
         <div className={styles.input}>
-          <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
           <InputSearchPlace
             onSelectPlace={(e: React.SetStateAction<Position | null>) => {
               setPosition(e);
             }}
           />
+          <InputStratum />
         </div>
         <div className={styles.mapContainer}>
           <h6 className={styles.h6}>

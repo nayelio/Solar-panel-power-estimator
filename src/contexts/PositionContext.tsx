@@ -18,6 +18,8 @@ type PositionContextType = {
   perimeter: number;
   setPerimeter: React.Dispatch<React.SetStateAction<number>>;
   sunData: Record<string, number> | null;
+  stratum: number | null;
+  setStratum: React.Dispatch<React.SetStateAction<number | null>>;
   polygons: google.maps.Polygon[];
   setPolygons: React.Dispatch<React.SetStateAction<google.maps.Polygon[]>>;
 };
@@ -30,6 +32,8 @@ const PositionContext = createContext<PositionContextType>({
   perimeter: 0,
   setPerimeter: () => {},
   sunData: null,
+  stratum: null,
+  setStratum: () => {},
   polygons: [],
   setPolygons: () => {},
 });
@@ -44,7 +48,7 @@ export const PositionProvider = ({
   const [perimeter, setPerimeter] = useState(0);
   const [showInput, setShowInput] = useState(true);
   const [polygons, setPolygons] = useState<google.maps.Polygon[]>([]);
-  const [countPanels, setCountPanels] = useState(232);
+  const [stratum, setStratum] = useState<number | null>(0);
 
   const { data: nasaData } = useQuery<SunData>({
     queryFn: () => request(apiMaps(position!.lat, position!.lng)),
@@ -56,6 +60,7 @@ export const PositionProvider = ({
     return nasaData?.properties.parameter["ALLSKY_SFC_SW_DWN"] ?? null;
   }, [nasaData?.properties.parameter]);
 
+  console.log(stratum);
   const value = useMemo(
     () => ({
       position,
@@ -65,13 +70,14 @@ export const PositionProvider = ({
       perimeter,
       setPerimeter,
       sunData,
-
+      stratum,
+      setStratum,
       polygons,
       setPolygons,
       showInput,
       setShowInput,
     }),
-    [area, perimeter, polygons, position, showInput, sunData]
+    [area, perimeter, polygons, position, showInput, stratum, sunData]
   );
 
   return (

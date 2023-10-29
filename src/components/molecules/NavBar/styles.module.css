@@ -1,11 +1,11 @@
 .container {
   display: flex;
   height: 50px;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding-inline: 20px;
-  margin-top: 10px;
-  width: 95%;
+  padding-inline: 40px;
+  margin-top: 2%;
+  width: 100%;
 }
 
 .button {
@@ -24,4 +24,31 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+.bttn {
+  width: 14%;
+  padding-right: 30px;
+  animation: changeColor 4s;
+}
+
+.img {
+  padding-left: 25px;
+}
+
+@keyframes changeColor {
+  0% {
+    color: white;
+  }
+  25% {
+    color: black;
+  }
+  50% {
+    color: white;
+  }
+  75% {
+    color: black;
+  }
+  100% {
+    color: white;
+  }
 }

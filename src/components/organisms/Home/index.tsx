@@ -5,13 +5,11 @@ import styles from "./styles.module.css";
 import InfoConsume from "@/components/molecules/InfoConsume";
 import InfoLocation from "@/components/molecules/InfoLocation";
 import ButtonArrayHome from "@/components/molecules/ButtonArrayHome";
+import { Button } from "@mui/material";
 
 const Home = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.bgContainer}>
-        <Background />
-      </div>
       <div className={styles.body}>
         <NavBar />
         <h1 className={styles.h1}>
@@ -22,9 +20,28 @@ const Home = () => {
           <img
             src="/image_landing.png"
             alt=""
-            width="60%"
+            width="55%"
             className={styles.image}
           />
+          <div className={styles.bttn}>
+            <Button
+              color="primary"
+              disabled={false}
+              size="small"
+              variant="contained"
+              sx={{
+                width: "100%",
+                height: "90%",
+                borderRadius: "10px",
+                backgroundColor: "#185aa6",
+                color: "#fff",
+              }}
+              onClick={() => {}}
+            >
+              {" "}
+              Sobre nosotros
+            </Button>
+          </div>
           <ButtonArrayHome />
         </div>
         <InfoConsume />
