@@ -24,10 +24,13 @@ export default function PHVSdescription() {
           Costo estimado del sistema
           <p className={styles.p}>
             $
-            {(systemPrice! + inverterToUse?.Price!).toLocaleString("de-DE", {
-              style: "currency",
-              currency: "COP",
-            })}
+            {((systemPrice ?? 0) + (inverterToUse?.Price ?? 0)).toLocaleString(
+              "de-DE",
+              {
+                style: "currency",
+                currency: "COP",
+              }
+            )}
           </p>
         </p>
       </div>
@@ -37,7 +40,7 @@ export default function PHVSdescription() {
           Ahorro por beneficio tributario
           <p className={styles.p}>
             $
-            {(systemPrice! * 0.5).toLocaleString("de-DE", {
+            {((systemPrice ?? 0) * 0.5).toLocaleString("de-DE", {
               style: "currency",
               currency: "COP",
             })}

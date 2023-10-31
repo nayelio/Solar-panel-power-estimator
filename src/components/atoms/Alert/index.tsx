@@ -16,7 +16,7 @@ export default function Alert() {
   const { panels } = usePanel();
   const { stratum } = usePosition();
 
-  const consumeWithSystem = consume! - generatedPowerPerMonth!;
+  const consumeWithSystem = (consume ?? 0) - (generatedPowerPerMonth ?? 0);
   return (
     <div className={styles.body}>
       <div className={styles.container}>
