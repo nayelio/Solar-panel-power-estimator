@@ -9,8 +9,6 @@ export default function Alert() {
     consume,
     kwhPrice,
     panelQuantity,
-    sunByDay,
-    panelToUse,
     streetLightingRateToUse,
     securityRateToUse,
     generatedPowerPerMonth,

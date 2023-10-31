@@ -5,9 +5,8 @@ import styles from "./styles.module.css";
 import { usePanel } from "@/contexts/PanelsContext";
 
 export default function PHVSdescription() {
-  const { systemPrice, panelsRealValue, panelQuantity, sunByDay, panelToUse } =
-    useRate();
-  const { inverterToUse, panels } = usePanel();
+  const { panelsRealValue, panelQuantity, sunByDay, panelToUse } = useRate();
+  const { inverterToUse, panels, systemPrice } = usePanel();
 
   return (
     <div className={styles.container}>

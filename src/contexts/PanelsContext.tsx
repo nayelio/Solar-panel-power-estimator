@@ -12,11 +12,13 @@ type PanelContextType = {
     lat: number;
     lng: number;
   }[][];
+  systemPrice: number | null;
 };
 
 const PanelContext = createContext<PanelContextType>({
   inverterToUse: null,
   panels: [],
+  systemPrice: null,
 });
 
 export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
@@ -43,13 +45,17 @@ export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
       .find((inverter) => inverter.Power > systemSize);
     return selectedInverter ?? null;
   }, [listInverter, panelToUse, panels.length]);
-
+  const systemPrice = useMemo(() => {
+    const priceEstimate = panelToUse?.Price! * (panels.length ?? 0);
+    return priceEstimate;
+  }, [panelToUse?.Price, panels.length]);
   const value = useMemo(
     () => ({
       inverterToUse,
       panels,
+      systemPrice,
     }),
-    [inverterToUse, panels]
+    [inverterToUse, panels, systemPrice]
   );
 
   return (

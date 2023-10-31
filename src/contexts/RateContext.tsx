@@ -4,6 +4,7 @@ import { Panels, SecurityRate, StreetLighting } from "@/helpers/request/types";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { usePosition } from "./PositionContext";
+import { usePanel } from "./PanelsContext";
 
 type RateContextType = {
   securityRate: SecurityRate | null;
@@ -26,7 +27,6 @@ type RateContextType = {
       }[]
     | undefined;
   panelToUse: Panels | null;
-  systemPrice: number | null;
   panelQuantity: number | null;
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
   setConsume: React.Dispatch<React.SetStateAction<number | null>>;
@@ -50,7 +50,6 @@ const RateContext = createContext<RateContextType>({
   panelToUse: null,
   panelQuantity: null,
   panelsRealValue: undefined,
-  systemPrice: 0,
   setTown: () => {},
   setConsume: () => {},
   setKwhPrice: () => {},
@@ -69,6 +68,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   >(null);
 
   const { sunData } = usePosition();
+  const { panels } = usePanel();
   const { data: listPanels } = useQuery({
     queryFn: () => request<Panels[]>(myApis.panelsDB),
     queryKey: [myApis.panelsDB],
@@ -145,11 +145,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     return Math.ceil(consume / panelToUse?.value!);
   }, [consume, panelToUse]);
 
-  const systemPrice = useMemo(() => {
-    const priceEstimate = panelToUse?.Price! * (panelQuantity ?? 0);
-    return priceEstimate;
-  }, [panelQuantity, panelToUse]);
-
+  console.log(panels);
   const value = useMemo(
     () => ({
       securityRate,
@@ -163,7 +159,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       power,
       sunByDay,
       consume,
-      systemPrice,
+
       panelsRealValue,
       panelQuantity,
       setTown,
@@ -184,7 +180,6 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       power,
       sunByDay,
       consume,
-      systemPrice,
       panelsRealValue,
       panelQuantity,
       generatedPowerPerMonth,
