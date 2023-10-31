@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   position: relative;
-  margin-top: 10px;
+  padding-top: 10px;
   display: flex;
   height: 2210px;
   flex-shrink: 0;

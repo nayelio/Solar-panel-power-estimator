@@ -34,7 +34,7 @@ const MapContainer = ({ enableDraw }: Props) => {
   return (
     <div
       style={{
-        width: "100%",
+        width: "70%",
         height: "100%",
         borderRadius: "20px",
       }}

@@ -24,23 +24,24 @@ const Home = () => {
             className={styles.image}
           />
           <div className={styles.bttn}>
-            <Button
-              color="primary"
-              disabled={false}
-              size="small"
-              variant="contained"
-              sx={{
-                width: "100%",
-                height: "90%",
-                borderRadius: "10px",
-                backgroundColor: "#185aa6",
-                color: "#fff",
-              }}
-              onClick={() => {}}
-            >
-              {" "}
-              Sobre nosotros
-            </Button>
+            <a href="/aboutUs">
+              <Button
+                color="primary"
+                disabled={false}
+                size="small"
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  height: "90%",
+                  borderRadius: "10px",
+                  backgroundColor: "#185aa6",
+                  color: "#fff",
+                }}
+              >
+                {" "}
+                Sobre nosotros
+              </Button>
+            </a>
           </div>
           <ButtonArrayHome />
         </div>

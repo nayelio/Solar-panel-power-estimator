@@ -43,6 +43,7 @@ const labels = [
 const Chart = () => {
   const { position, sunData } = usePosition();
   const { inverterToUse } = usePanel();
+  const { setGeneratedPowerPerMonth } = useRate();
 
   const data = useMemo(() => {
     let valuesByMonth: Record<string, number[]> = {};
@@ -62,19 +63,24 @@ const Chart = () => {
       mediaByMonth[mes] = totalByMonth / valuesByMonth[mes].length;
     }
 
+    var items = Object.keys(mediaByMonth)
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+      .map((item) => (mediaByMonth[item] * inverterToUse?.Power! * 30) / 1000);
+
+    setGeneratedPowerPerMonth(items.length ? Math.min(...items) : null);
+
+    console.log(items);
     return {
       labels,
       datasets: [
         {
           label: "Energía promedio generada por mes (kWh)",
-          data: Object.keys(mediaByMonth)
-            .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
-            .map((item) => mediaByMonth[item] * inverterToUse?.Power! * 30),
+          data: items,
           backgroundColor: "#7DAFB0",
         },
       ],
     };
-  }, [inverterToUse?.Power, sunData]);
+  }, [inverterToUse?.Power, setGeneratedPowerPerMonth, sunData]);
 
   const options = {
     responsive: true,
@@ -84,7 +90,7 @@ const Chart = () => {
       },
       title: {
         display: true,
-        text: "Potencia generada por mes",
+        text: "Energía generada por mes",
       },
     },
   };

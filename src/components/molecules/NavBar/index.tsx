@@ -9,7 +9,10 @@ const NavBar = () => {
         <img src="/logo.png" alt="" width="30%" />
       </div>
       <div className={styles.bttn}>
-        <a href="#">
+        <a
+          href="https://forms.office.com/r/QutHLKvx0b?origin=lprLink"
+          target="_blank"
+        >
           <Button
             className={styles.bttn}
             sx={{
@@ -18,10 +21,10 @@ const NavBar = () => {
               backgroundColor: "#185aa6",
               color: "white",
               border: "1px solid",
-              height: "40%",
+
+              "& .MuiButton-root": { width: "100%" },
             }}
           >
-            {" "}
             Realiza la encuesta
           </Button>
         </a>

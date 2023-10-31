@@ -7,7 +7,9 @@ import { usePosition } from "./PositionContext";
 
 type RateContextType = {
   securityRate: SecurityRate | null;
+  securityRateToUse: number | null;
   streetLightingRate: StreetLighting | null;
+  streetLightingRateToUse: number | null;
   kwhPrice: number | null;
   consume: number | null;
   price: number | null;
@@ -29,11 +31,17 @@ type RateContextType = {
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
   setConsume: React.Dispatch<React.SetStateAction<number | null>>;
   setKwhPrice: React.Dispatch<React.SetStateAction<number | null>>;
+  generatedPowerPerMonth: number | null;
+  setGeneratedPowerPerMonth: React.Dispatch<
+    React.SetStateAction<null | number>
+  >;
 };
 
 const RateContext = createContext<RateContextType>({
   securityRate: null,
+  securityRateToUse: null,
   streetLightingRate: null,
+  streetLightingRateToUse: null,
   kwhPrice: 944.21,
   consume: null,
   sunByDay: 0,
@@ -46,6 +54,8 @@ const RateContext = createContext<RateContextType>({
   setTown: () => {},
   setConsume: () => {},
   setKwhPrice: () => {},
+  generatedPowerPerMonth: null,
+  setGeneratedPowerPerMonth: () => null,
 });
 
 export const RateProvider = ({ children }: { children: React.ReactNode }) => {
@@ -54,6 +64,10 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const [kwhPrice, setKwhPrice] = useState<number | null>(null);
   const [price, setPrice] = useState<number | null>(null);
   const [power, setPower] = useState<number | null>(null);
+  const [generatedPowerPerMonth, setGeneratedPowerPerMonth] = useState<
+    number | null
+  >(null);
+
   const { sunData } = usePosition();
   const { data: listPanels } = useQuery({
     queryFn: () => request<Panels[]>(myApis.panelsDB),
@@ -74,9 +88,23 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     return getRate(securityData, consume, town);
   }, [securityData, town, consume]);
 
+  const securityRateToUse = securityRate?.Rate! * 42412;
   const streetLightingRate = useMemo(() => {
     return getRate(streetLightingData, consume, town);
   }, [streetLightingData, town, consume]);
+
+  const streetLightingRateToUse = useMemo(() => {
+    if (streetLightingRate?.Town.Name === "Barranquilla") {
+      return streetLightingRate.Rate * 42412;
+    } else {
+      return streetLightingRate?.Rate! * consume! * kwhPrice!;
+    }
+  }, [
+    consume,
+    kwhPrice,
+    streetLightingRate?.Rate,
+    streetLightingRate?.Town.Name,
+  ]);
 
   const sunByDay = useMemo(() => {
     let valuesByMonth: Record<string, number[]> = {};
@@ -125,7 +153,9 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const value = useMemo(
     () => ({
       securityRate,
+      securityRateToUse,
       streetLightingRate,
+      streetLightingRateToUse,
       kwhPrice,
       listPanels,
       price,
@@ -139,20 +169,25 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       setTown,
       setConsume,
       setKwhPrice,
+      generatedPowerPerMonth,
+      setGeneratedPowerPerMonth,
     }),
     [
       securityRate,
+      securityRateToUse,
       streetLightingRate,
+      streetLightingRateToUse,
       kwhPrice,
-      sunByDay,
-      systemPrice,
-      panelQuantity,
-      panelsRealValue,
       listPanels,
       price,
-      power,
       panelToUse,
+      power,
+      sunByDay,
       consume,
+      systemPrice,
+      panelsRealValue,
+      panelQuantity,
+      generatedPowerPerMonth,
     ]
   );
 

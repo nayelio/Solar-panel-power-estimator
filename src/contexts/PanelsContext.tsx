@@ -44,7 +44,6 @@ export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
     return selectedInverter ?? null;
   }, [listInverter, panelToUse, panels.length]);
 
-  console.log(inverterToUse);
   const value = useMemo(
     () => ({
       inverterToUse,

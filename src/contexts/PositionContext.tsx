@@ -60,7 +60,6 @@ export const PositionProvider = ({
     return nasaData?.properties.parameter["ALLSKY_SFC_SW_DWN"] ?? null;
   }, [nasaData?.properties.parameter]);
 
-  console.log(stratum);
   const value = useMemo(
     () => ({
       position,
