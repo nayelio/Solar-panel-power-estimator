@@ -32,7 +32,7 @@ export default function Alert() {
           <p className={styles.pp}>
             Disminuyes consumo facturado un
             <p className={styles.p}>
-              {((panels.length * 100) / panelQuantity!).toFixed(0)} %{" "}
+              {((panels.length * 100) / (panelQuantity ?? 0)).toFixed(0)} %{" "}
             </p>
           </p>
         </div>
@@ -44,9 +44,9 @@ export default function Alert() {
             Sin un sistema solar fotovoltaico
             <p className={styles.pRed}>
               {(
-                (consume! * kwhPrice! +
-                  securityRateToUse! +
-                  streetLightingRateToUse!) *
+                ((consume ?? 0) * (kwhPrice ?? 0) +
+                  (securityRateToUse ?? 0) +
+                  (streetLightingRateToUse ?? 0)) *
                 12
               ).toLocaleString("de-DE", {
                 style: "currency",
@@ -60,9 +60,9 @@ export default function Alert() {
             Con el sistema solar fotovoltaico
             <p className={styles.pGreen}>
               {(
-                (consumeWithSystem * kwhPrice! +
-                  securityRateToUse! +
-                  streetLightingRateToUse!) *
+                (consumeWithSystem * (kwhPrice ?? 0) +
+                  (securityRateToUse ?? 0) +
+                  (streetLightingRateToUse ?? 0)) *
                 12
               ).toLocaleString("de-DE", {
                 style: "currency",
@@ -70,7 +70,6 @@ export default function Alert() {
               })}
             </p>
           </p>
-          x
         </div>
       </div>
     </div>
