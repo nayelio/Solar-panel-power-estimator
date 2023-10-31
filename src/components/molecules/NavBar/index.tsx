@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@mui/material";
 import styles from "./styles.module.css";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
@@ -9,7 +10,7 @@ const NavBar = () => {
         <img src="/logo.png" alt="" width="30%" />
       </div>
       <div className={styles.bttn}>
-        <a
+        <Link
           href="https://forms.office.com/r/QutHLKvx0b?origin=lprLink"
           target="_blank"
         >
@@ -27,7 +28,7 @@ const NavBar = () => {
           >
             Realiza la encuesta
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   );

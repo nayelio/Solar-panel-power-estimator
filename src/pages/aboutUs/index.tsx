@@ -2,11 +2,12 @@
 import NavBar from "@/components/molecules/NavBar";
 import styles from "./styles.module.css";
 import { Button } from "@mui/material";
+import Link from "next/link";
 export default function AboutUs() {
   return (
     <div className={styles.container}>
       <div className={styles.bttn}>
-        <a
+        <Link
           href="https://forms.office.com/r/QutHLKvx0b?origin=lprLink"
           target="_blank"
         >
@@ -26,7 +27,7 @@ export default function AboutUs() {
           >
             Realiza la encuesta
           </Button>
-        </a>
+        </Link>
       </div>
       <br></br>
       <div className={styles.body}>

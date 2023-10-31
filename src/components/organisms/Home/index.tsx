@@ -6,6 +6,7 @@ import InfoConsume from "@/components/molecules/InfoConsume";
 import InfoLocation from "@/components/molecules/InfoLocation";
 import ButtonArrayHome from "@/components/molecules/ButtonArrayHome";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -24,7 +25,7 @@ const Home = () => {
             className={styles.image}
           />
           <div className={styles.bttn}>
-            <a href="/aboutUs">
+            <Link href="/aboutUs">
               <Button
                 color="primary"
                 disabled={false}
@@ -41,7 +42,7 @@ const Home = () => {
                 {" "}
                 Sobre nosotros
               </Button>
-            </a>
+            </Link>
           </div>
           <ButtonArrayHome />
         </div>
