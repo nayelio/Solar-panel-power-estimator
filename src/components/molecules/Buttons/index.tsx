@@ -20,9 +20,9 @@ export default function Buttons() {
         sx={{
           width: "20%",
           borderRadius: "10px",
+
           backgroundColor: "white",
           color: "black",
-          border: "1px solid",
           "&:hover": {
             backgroundColor: "#000",
           },

@@ -76,7 +76,7 @@ const Chart = () => {
         {
           label: "Energía promedio generada por mes (kWh)",
           data: items,
-          backgroundColor: "#7DAFB0",
+          backgroundColor: "#185aa6",
         },
       ],
     };
@@ -100,7 +100,7 @@ const Chart = () => {
     <div
       style={{
         height: "100%",
-        width: "100%",
+        width: "60%",
         padding: "2%",
         backgroundColor: "#fff",
         borderRadius: "30px",

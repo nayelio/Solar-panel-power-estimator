@@ -130,12 +130,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
 
   const panelsRealValue = listPanels?.map((panel) => ({
     ...panel,
-    value:
-      (panel.Power / 1000) *
-      panel.Efficiency *
-      (sunByDay ?? 0) *
-      30 *
-      (panel.Width * panel.Height),
+    value: panel.Power / 1000,
     area: panel.Width * panel.Height,
   }));
 
@@ -145,7 +140,6 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     return Math.ceil(consume / panelToUse?.value!);
   }, [consume, panelToUse]);
 
-  console.log(panels);
   const value = useMemo(
     () => ({
       securityRate,

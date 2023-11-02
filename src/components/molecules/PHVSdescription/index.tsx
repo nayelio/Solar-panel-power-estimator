@@ -19,34 +19,6 @@ export default function PHVSdescription() {
           </p>
         </p>
       </div>
-      <div className={styles.pContainer}>
-        <p className={styles.pp}>
-          Costo estimado del sistema
-          <p className={styles.p}>
-            $
-            {((systemPrice ?? 0) + (inverterToUse?.Price ?? 0)).toLocaleString(
-              "de-DE",
-              {
-                style: "currency",
-                currency: "COP",
-              }
-            )}
-          </p>
-        </p>
-      </div>
-
-      <div className={styles.pContainer}>
-        <p className={styles.pp}>
-          Ahorro por beneficio tributario
-          <p className={styles.p}>
-            $
-            {((systemPrice ?? 0) * 0.5).toLocaleString("de-DE", {
-              style: "currency",
-              currency: "COP",
-            })}
-          </p>
-        </p>
-      </div>
 
       <div className={styles.informationContainer}>
         <div className={styles.pContainer}>

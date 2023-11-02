@@ -38,7 +38,7 @@ export const PanelProvider = ({ children }: { children: React.ReactNode }) => {
 
   const inverterToUse = useMemo(() => {
     if (!panelToUse) return null;
-    const systemSize = panels.length * 0.8 * panelToUse.Power;
+    const systemSize = panels.length * 0.85 * panelToUse.Power;
 
     const selectedInverter = listInverter
       ?.sort((a, b) => a.Power - b.Power)

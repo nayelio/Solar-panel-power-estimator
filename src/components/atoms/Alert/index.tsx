@@ -5,68 +5,46 @@ import styles from "./styles.module.css";
 import { usePanel } from "@/contexts/PanelsContext";
 
 export default function Alert() {
-  const {
-    consume,
-    kwhPrice,
-    panelQuantity,
-    streetLightingRateToUse,
-    securityRateToUse,
-    generatedPowerPerMonth,
-  } = useRate();
-  const { panels } = usePanel();
+  const { consume, panelToUse, generatedPowerPerMonth, panelsRealValue } =
+    useRate();
+  const { inverterToUse, systemPrice, panels } = usePanel();
   const { stratum } = usePosition();
 
   const consumeWithSystem = (consume ?? 0) - (generatedPowerPerMonth ?? 0);
   return (
-    <div className={styles.body}>
-      <div className={styles.container}>
-        <div className={styles.pContainer}>
-          <p className={styles.pp}>
-            Con el área disponible tienes:
-            <p className={styles.p}>{panels.length} paneles</p>
+    <div className={styles.container}>
+      <p className={styles.system}>Beneficios económicos</p>
+      <div className={styles.pContainer}>
+        <p className={styles.pp}>
+          <p className={styles.p}>
+            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")}
           </p>
-        </div>
-        <div className={styles.pContainer}>
-          <p className={styles.pp}>
-            Disminuyes consumo facturado un
-            <p className={styles.p}>
-              {((panels.length * 100) / (panelQuantity ?? 0)).toFixed(0)} %{" "}
-            </p>
-          </p>
-        </div>
+          Costo de la planta
+        </p>
       </div>
-      <div className={styles.aContainer}>
+      <div className={styles.pContainer}>
+        <p className={styles.pp}>
+          <p className={styles.p}>
+            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")}
+          </p>
+          Retorno de la inversion
+        </p>
+      </div>
+      <div className={styles.informationContainer}>
         <div className={styles.pContainer}>
-          <p className={styles.ppp}>¿Cuánto pagas al año?</p>
           <p className={styles.pp}>
-            Sin un sistema solar fotovoltaico
-            <p className={styles.pRed}>
-              {(
-                ((consume ?? 0) * (kwhPrice ?? 0) +
-                  (securityRateToUse ?? 0) +
-                  (streetLightingRateToUse ?? 0)) *
-                12
-              ).toLocaleString("de-DE", {
-                style: "currency",
-                currency: "COP",
-              })}
+            <p className={styles.pGren}>
+              {panelsRealValue?.[2].Power ? panelsRealValue?.[2].Power : 0}
             </p>
+            Lo que pagas
           </p>
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            Con el sistema solar fotovoltaico
-            <p className={styles.pGreen}>
-              {(
-                (consumeWithSystem * (kwhPrice ?? 0) +
-                  (securityRateToUse ?? 0) +
-                  (streetLightingRateToUse ?? 0)) *
-                12
-              ).toLocaleString("de-DE", {
-                style: "currency",
-                currency: "COP",
-              })}
+            <p className={styles.pRed}>
+              {(inverterToUse?.Power! * 1).toLocaleString("de-DE")} WAC
             </p>
+            Lo que dejas de pagar
           </p>
         </div>
       </div>

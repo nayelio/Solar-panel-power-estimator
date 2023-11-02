@@ -42,16 +42,16 @@ const InfoLocation = () => {
           </h6>
           <div className={styles.mapAlert}>
             <MapContainer enableDraw={true} />
-            <Alert />
+            <PHVSdescription />
           </div>
           <div className={styles.button}>
             <Buttons />
           </div>
         </div>
         <div className={styles.resultContainer}>
-          <h6 className={styles.h6}>Esta es la estimación de tu sistema </h6>
+          <h6 className={styles.h61}>Esta es la estimación de tu sistema </h6>
           <div className={styles.results}>
-            <PHVSdescription />
+            <Alert />
             <Chart />
           </div>
         </div>
