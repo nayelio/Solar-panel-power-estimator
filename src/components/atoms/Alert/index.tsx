@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import { usePanel } from "@/contexts/PanelsContext";
 
 export default function Alert() {
-  const { consume, panelToUse, generatedPowerPerMonth, panelsRealValue } =
+  const { consume, panelToUse, generatedPowerPerMonth, kwhPrice, sunByDay } =
     useRate();
   const { inverterToUse, systemPrice, panels } = usePanel();
   const { stratum } = usePosition();
@@ -17,7 +17,16 @@ export default function Alert() {
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           <p className={styles.p}>
-            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")}
+            {(
+              panels.length * (panelToUse?.Price ?? 0) +
+              (inverterToUse?.Price ?? 0)
+            ).toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0, // Esto evita que se muestren decimales
+              maximumFractionDigits: 0, // Esto asegura que no haya decimales
+            })}{" "}
+            COP
           </p>
           Costo de la planta
         </p>
@@ -25,26 +34,56 @@ export default function Alert() {
       <div className={styles.pContainer}>
         <p className={styles.pp}>
           <p className={styles.p}>
-            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")}
+            {(
+              (panels.length * (panelToUse?.Price ?? 0) +
+                (inverterToUse?.Price ?? 0)) /
+              2
+            ).toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0, // Esto evita que se muestren decimales
+              maximumFractionDigits: 0, // Esto asegura que no haya decimales
+            })}{" "}
+            COP
           </p>
-          Retorno de la inversion
+          Beneficio tributario en usuarios comerciales
         </p>
       </div>
       <div className={styles.informationContainer}>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
             <p className={styles.pGren}>
-              {panelsRealValue?.[2].Power ? panelsRealValue?.[2].Power : 0}
+              {!consume
+                ? 0
+                : (
+                    ((((inverterToUse?.Power ?? 0) / 1000) *
+                      (sunByDay ?? 0) *
+                      30) /
+                      (consume ?? 0)) *
+                    100
+                  ).toFixed(0)}
+              %
             </p>
-            Lo que pagas
+            Consumo ahorrado al mes
           </p>
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.pRed}>
-              {(inverterToUse?.Power! * 1).toLocaleString("de-DE")} WAC
+            <p className={styles.pGren}>
+              {(
+                ((inverterToUse?.Power ?? 0) / 1000) *
+                (sunByDay ?? 0) *
+                30 *
+                (kwhPrice ?? 0)
+              ).toLocaleString("es-CO", {
+                style: "currency",
+                currency: "COP",
+                minimumFractionDigits: 0, // Esto evita que se muestren decimales
+                maximumFractionDigits: 0, // Esto asegura que no haya decimales
+              })}{" "}
+              COP
             </p>
-            Lo que dejas de pagar
+            Lo que dejas de pagar al mes
           </p>
         </div>
       </div>

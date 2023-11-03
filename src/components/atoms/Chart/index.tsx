@@ -69,7 +69,6 @@ const Chart = () => {
 
     setGeneratedPowerPerMonth(items.length ? Math.min(...items) : null);
 
-    console.log(items);
     return {
       labels,
       datasets: [

@@ -7,6 +7,7 @@ import InfoLocation from "@/components/molecules/InfoLocation";
 import ButtonArrayHome from "@/components/molecules/ButtonArrayHome";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import InfoForm from "@/components/molecules/infoForm";
 
 const Home = () => {
   return (
@@ -48,6 +49,7 @@ const Home = () => {
         </div>
         <InfoConsume />
         <InfoLocation />
+        <InfoForm />
       </div>
     </div>
   );

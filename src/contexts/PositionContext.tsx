@@ -9,7 +9,7 @@ export type Position = {
 };
 
 const apiMaps = (lat: number, lng: number) =>
-  `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2020&end=2022&latitude=${lat}&longitude=${lng}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`;
+  `https://power.larc.nasa.gov/api/temporal/monthly/point?start=2022&end=2022&latitude=${lat}&longitude=${lng}&community=re&parameters=ALLSKY_SFC_SW_DWN&format=json&user=nayeli&header=true`;
 type PositionContextType = {
   position: Position | null;
   setPosition: React.Dispatch<React.SetStateAction<Position | null>>;

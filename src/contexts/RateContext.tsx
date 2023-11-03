@@ -67,7 +67,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     number | null
   >(null);
 
-  const { sunData } = usePosition();
+  const { sunData, polygons } = usePosition();
   const { panels } = usePanel();
   const { data: listPanels } = useQuery({
     queryFn: () => request<Panels[]>(myApis.panelsDB),
@@ -114,6 +114,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       const prevValue = valuesByMonth[mes] ?? [];
       valuesByMonth[mes] = [...prevValue, sunData[name]];
     }
+    console.log(valuesByMonth);
 
     let mediaByMonth: Record<string, number> = {};
     for (var mes in valuesByMonth) {
@@ -128,13 +129,15 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     return wattsPerDay;
   }, [sunData]);
 
+  console.log(sunByDay);
   const panelsRealValue = listPanels?.map((panel) => ({
     ...panel,
-    value: panel.Power / 1000,
+    value: (panel.Power / 1000) * sunByDay * 30,
     area: panel.Width * panel.Height,
   }));
 
-  const panelToUse = panelsRealValue?.[2] ?? null;
+  const panelToUse =
+    !consume || !polygons.length ? null : panelsRealValue?.[2] ?? null;
   const panelQuantity = useMemo(() => {
     if (consume == null) return null;
     return Math.ceil(consume / panelToUse?.value!);

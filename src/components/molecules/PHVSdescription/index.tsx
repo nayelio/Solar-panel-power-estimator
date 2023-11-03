@@ -13,10 +13,11 @@ export default function PHVSdescription() {
       <p className={styles.system}>Caracteristicas del sistema</p>
       <div className={styles.pContainer}>
         <p className={styles.pp}>
-          Tamaño de la planta
           <p className={styles.p}>
-            {(panels.length * panelToUse?.Power!).toLocaleString("de-DE")} Wp
+            {(panels.length * (panelToUse?.Power ?? 0)).toLocaleString("de-DE")}{" "}
+            Wp
           </p>
+          Tamaño de la planta
         </p>
       </div>
 
@@ -24,21 +25,19 @@ export default function PHVSdescription() {
         <div className={styles.pContainer}>
           <p className={styles.pp}>
             <p className={styles.p}>{panels.length}</p>
-            Paneles
+            n° Paneles
           </p>
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.p}>
-              {panelsRealValue?.[2].Power ? panelsRealValue?.[2].Power : 0}
-            </p>
+            <p className={styles.p}>{panelToUse?.Power ?? 0}</p>
             Potencia del panel
           </p>
         </div>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
             <p className={styles.p}>
-              {inverterToUse?.Power!.toLocaleString("de-DE")} WAC
+              {inverterToUse?.Power.toLocaleString("de-DE") ?? 0} WAC
             </p>
             Potencia del inversor
           </p>

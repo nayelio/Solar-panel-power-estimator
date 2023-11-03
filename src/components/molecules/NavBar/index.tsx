@@ -19,10 +19,9 @@ const NavBar = () => {
             sx={{
               width: "100%",
               borderRadius: "10px",
-              backgroundColor: "#185aa6",
-              color: "white",
+              backgroundColor: "#00F536",
+              color: "black",
               border: "1px solid",
-
               "& .MuiButton-root": { width: "100%" },
             }}
           >
