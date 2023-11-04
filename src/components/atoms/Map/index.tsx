@@ -2,6 +2,7 @@ import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { generatePanels } from "@/helpers/panels";
+import styles from "./styles.module.css";
 import {
   DrawingManagerF,
   GoogleMap,
@@ -32,13 +33,7 @@ const MapContainer = ({ enableDraw }: Props) => {
   const { panels } = usePanel();
 
   return (
-    <div
-      style={{
-        width: "70%",
-        height: "100%",
-        borderRadius: "20px",
-      }}
-    >
+    <div className={styles.map}>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={23}

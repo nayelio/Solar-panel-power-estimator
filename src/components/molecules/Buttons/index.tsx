@@ -18,7 +18,7 @@ export default function Buttons() {
         size="small"
         variant="outlined"
         sx={{
-          width: "20%",
+          width: "50%",
           borderRadius: "10px",
 
           backgroundColor: "white",

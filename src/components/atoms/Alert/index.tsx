@@ -5,10 +5,15 @@ import styles from "./styles.module.css";
 import { usePanel } from "@/contexts/PanelsContext";
 
 export default function Alert() {
-  const { consume, panelToUse, generatedPowerPerMonth, kwhPrice, sunByDay } =
-    useRate();
-  const { inverterToUse, systemPrice, panels } = usePanel();
-  const { stratum } = usePosition();
+  const {
+    consume,
+    panelToUse,
+    generatedPowerPerMonth,
+    kwhPrice,
+    sunByDay,
+    inverterToUse,
+  } = useRate();
+  const { panels } = usePanel();
 
   const consumeWithSystem = (consume ?? 0) - (generatedPowerPerMonth ?? 0);
   return (

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 import styles from "./styles.module.css";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
@@ -13,6 +13,7 @@ const ButtonArrayHome = () => {
   ];
   const messageCount = messages.length;
   const [messageIndex, setMessageIndex] = useState(0);
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -25,12 +26,21 @@ const ButtonArrayHome = () => {
   }, [messageCount]);
   return (
     <div className={styles.container}>
-      <div className={styles.pContainer}>
-        <p className={styles.pLine}>
-          ¡Qué ofrecemos? <div className={styles.line} />
-        </p>
-        <p className={styles.p}>{messages[messageIndex]}</p>
-      </div>
+      {isMobile ? (
+        <div className={styles.pContainer}>
+          <p className={styles.pLine}>
+            ¡Qué ofrecemos? <div className={styles.line} />
+          </p>
+          <p className={styles.p}>{messages[messageIndex]}</p>
+        </div>
+      ) : (
+        <div className={styles.pContainer}>
+          <p className={styles.pLine}>
+            ¡Qué ofrecemos? <div className={styles.line} />
+          </p>
+          <p className={styles.p}>{messages[messageIndex]}</p>
+        </div>
+      )}
     </div>
   );
 };

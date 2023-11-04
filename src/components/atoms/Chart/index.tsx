@@ -1,7 +1,7 @@
 import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
-import { Skeleton } from "@mui/material";
+import { Skeleton, useMediaQuery } from "@mui/material";
 import {
   BarElement,
   CategoryScale,
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
+import styles from "./styles.module.css";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -42,8 +43,9 @@ const labels = [
 ];
 const Chart = () => {
   const { position, sunData } = usePosition();
-  const { inverterToUse } = usePanel();
-  const { setGeneratedPowerPerMonth } = useRate();
+  const {} = usePanel();
+  const { setGeneratedPowerPerMonth, inverterToUse } = useRate();
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   const data = useMemo(() => {
     let valuesByMonth: Record<string, number[]> = {};
@@ -96,15 +98,7 @@ const Chart = () => {
 
   if (!data) return <Skeleton variant="rectangular" width={800} height={400} />;
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "60%",
-        padding: "2%",
-        backgroundColor: "#fff",
-        borderRadius: "30px",
-      }}
-    >
+    <div className={styles.chart}>
       {data ? <Bar options={options} data={data} /> : <Skeleton />}
     </div>
   );

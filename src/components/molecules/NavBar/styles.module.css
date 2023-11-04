@@ -1,13 +1,12 @@
 .container {
-  display: flex;
-  height: 50px;
-  justify-content: space-between;
-  align-items: center;
-  padding-inline: 40px;
-  margin-top: 2%;
   width: 100%;
 }
-
+.body {
+  display: flex;
+  height: 2%;
+  justify-content: space-between;
+  align-items: center;
+}
 .button {
   padding: 15px 20px;
   align-items: center;
@@ -35,6 +34,9 @@
 .img {
   padding-left: 25px;
 }
+.img2 {
+  width: 30%;
+}
 
 @keyframes changeColor {
   0% {
@@ -51,5 +53,20 @@
   }
   100% {
     color: white;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  /* Estilos para dispositivos móviles con ancho entre 320px y 480px */
+
+  .body {
+    width: 100%;
+  }
+  .bttn {
+    animation: changeColor 4s;
+    width: "100%";
+  }
+  .img2 {
+    width: 50%;
   }
 }

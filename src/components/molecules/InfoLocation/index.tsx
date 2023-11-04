@@ -12,50 +12,84 @@ import Chart from "@/components/atoms/Chart";
 import { useRate } from "@/contexts/RateContext";
 import Alert from "@/components/atoms/Alert";
 import InputStratum from "@/components/atoms/InputStratum";
+import { useMediaQuery } from "@mui/material";
 
 const InfoLocation = () => {
   const [step, setStep] = useState(0);
   const { position, setPosition } = usePosition();
+  const isMobile = useMediaQuery("(max-width: 480px)");
+
   return (
     <div className={styles.container}>
-      <div className={styles.box}>
-        <ProgressBar step={step} setStep={setStep} />
-      </div>
-
-      <div className={styles.body}>
-        <h6 className={styles.h6}>
-          1. Ingrese datos de consumo y tarifa de energía{" "}
-        </h6>
-        <InputConsumeInformation />
-        <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
-        <div className={styles.input}>
-          <InputSearchPlace
-            onSelectPlace={(e: React.SetStateAction<Position | null>) => {
-              setPosition(e);
-            }}
-          />
-          <InputStratum />
-        </div>
-        <div className={styles.mapContainer}>
+      {isMobile ? (
+        <div className={styles.body}>
           <h6 className={styles.h6}>
-            3. Dibuje el área disponible para el sistema{" "}
+            1. Ingrese datos de consumo y tarifa de energía{" "}
           </h6>
-          <div className={styles.mapAlert}>
-            <MapContainer enableDraw={true} />
-            <PHVSdescription />
+          <InputConsumeInformation />
+          <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
+          <div className={styles.input}>
+            <InputSearchPlace
+              onSelectPlace={(e: React.SetStateAction<Position | null>) => {
+                setPosition(e);
+              }}
+            />
+            <InputStratum />
           </div>
-          <div className={styles.button}>
-            <Buttons />
+          <div className={styles.mapContainer}>
+            <h6 className={styles.h6}>
+              3. Dibuje el área disponible para el sistema{" "}
+            </h6>
+            <div className={styles.mapAlert}>
+              <MapContainer enableDraw={true} />
+              <Buttons />
+              <PHVSdescription />
+            </div>
+          </div>
+          <div className={styles.resultContainer}>
+            <h6 className={styles.h61}>Esta es la estimación de tu sistema </h6>
+            <div className={styles.results}>
+              <Alert />
+              <Chart />
+            </div>
           </div>
         </div>
-        <div className={styles.resultContainer}>
-          <h6 className={styles.h61}>Esta es la estimación de tu sistema </h6>
-          <div className={styles.results}>
-            <Alert />
-            <Chart />
+      ) : (
+        <div className={styles.body}>
+          <h6 className={styles.h6}>
+            1. Ingrese datos de consumo y tarifa de energía{" "}
+          </h6>
+          <InputConsumeInformation />
+          <h6 className={styles.h6}>2. Ingrese la ubicación del sistema </h6>
+          <div className={styles.input}>
+            <InputSearchPlace
+              onSelectPlace={(e: React.SetStateAction<Position | null>) => {
+                setPosition(e);
+              }}
+            />
+            <InputStratum />
+          </div>
+          <div className={styles.mapContainer}>
+            <h6 className={styles.h6}>
+              3. Dibuje el área disponible para el sistema{" "}
+            </h6>
+            <div className={styles.mapAlert}>
+              <MapContainer enableDraw={true} />
+              <PHVSdescription />
+            </div>
+            <div className={styles.button}>
+              <Buttons />
+            </div>
+          </div>
+          <div className={styles.resultContainer}>
+            <h6 className={styles.h61}>Esta es la estimación de tu sistema </h6>
+            <div className={styles.results}>
+              <Alert />
+              <Chart />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
