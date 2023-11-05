@@ -139,22 +139,32 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       Object.values(mediaByMonth).reduce((acc, curr) => acc + curr, 0) / 12;
     return wattsPerDay;
   }, [sunData]);
+
   const panelsRealValue = listPanels?.map((panel) => ({
     ...panel,
     value: panel.Power,
     area: panel.Width * panel.Height,
   }));
 
-  const inverterToUse = useMemo(() => {
-    const consumeInWatts = ((consume ?? 0) * (1000 / 30)) / (sunByDay ?? 0);
-    const selectedInverter = listInverter
-      ?.sort((a, b) => a.Power - b.Power)
-      .find((inverter) => inverter.Power >= consumeInWatts);
-    return selectedInverter ?? null;
-  }, [consume, listInverter, , sunByDay]);
-
   const panelToUse =
     !consume || !polygons.length ? null : panelsRealValue?.[2] ?? null;
+
+  const inverterToUse = useMemo(() => {
+    if (!consume || panels.length == 0) return null;
+    const consumeInWatts = (consume * (1000 / 30)) / (sunByDay ?? 0);
+    const systemSizeReference = panels.length * (panelToUse?.Power ?? 0);
+    if (systemSizeReference == consumeInWatts) {
+      const selectedInverter = listInverter
+        ?.sort((a, b) => a.Power - b.Power)
+        .find((inverter) => inverter.Power >= consumeInWatts);
+      return selectedInverter ?? null;
+    } else {
+      const selectedInverter = listInverter
+        ?.sort((a, b) => a.Power - b.Power)
+        .find((inverter) => inverter.Power >= systemSizeReference);
+      return selectedInverter ?? null;
+    }
+  }, [consume, listInverter, panelToUse?.Power, panels.length, sunByDay]);
 
   const panelQuantity = useMemo(() => {
     if (!inverterToUse || consume == null) return null;
@@ -162,8 +172,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       (((inverterToUse.Power ?? 0) / (panelToUse?.value ?? 0)) * 1) / 0.82
     );
   }, [consume, inverterToUse, panelToUse?.value]);
-  console.log(inverterToUse);
-  console.log(panelQuantity);
+
   const value = useMemo(
     () => ({
       securityRate,
