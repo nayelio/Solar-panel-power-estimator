@@ -1,4 +1,3 @@
-import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { Skeleton, useMediaQuery } from "@mui/material";
@@ -43,7 +42,6 @@ const labels = [
 ];
 const Chart = () => {
   const { position, sunData } = usePosition();
-  const {} = usePanel();
   const { setGeneratedPowerPerMonth, inverterToUse } = useRate();
   const isMobile = useMediaQuery("(max-width: 480px)");
 

@@ -1,4 +1,3 @@
-import { useRate } from "@/contexts/RateContext";
 import { getAnglePolygon } from "./getAnglePolygon";
 import { getSidesPolygon } from "./getSidesPolygon";
 import { rotatePolygon } from "./rotatePolygon";
@@ -15,7 +14,7 @@ const PERCENTAGE_HEIGHT_MANTAINEMENT = 0.3;
 
 export const generatePanels = (
   polygon: google.maps.Polygon,
-  panelSize: PanelSize = { width: 1.13, height: 2.27 },
+  panelSize: PanelSize = { width: 1.8, height: 1.0 },
   inclination?: number
 ) => {
   var polygonBounds = new google.maps.LatLngBounds();

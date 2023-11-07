@@ -1,4 +1,3 @@
-import { usePanel } from "@/contexts/PanelsContext";
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { generatePanels } from "@/helpers/panels";
@@ -30,8 +29,7 @@ const mapStyles = {
 const MapContainer = ({ enableDraw }: Props) => {
   const { position, setPerimeter, setPolygons, setArea, polygons } =
     usePosition();
-  const { panels } = usePanel();
-
+  const { panels } = useRate();
   return (
     <div className={styles.map}>
       <GoogleMap

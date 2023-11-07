@@ -2,7 +2,6 @@ import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { RectangleProps } from "@react-google-maps/api";
 import styles from "./styles.module.css";
-import { usePanel } from "@/contexts/PanelsContext";
 
 export default function Alert() {
   const {
@@ -12,8 +11,8 @@ export default function Alert() {
     kwhPrice,
     sunByDay,
     inverterToUse,
+    panels,
   } = useRate();
-  const { panels } = usePanel();
 
   const consumeWithSystem = (consume ?? 0) - (generatedPowerPerMonth ?? 0);
   return (

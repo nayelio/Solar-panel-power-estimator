@@ -4,12 +4,10 @@ import { Button } from "@mui/material";
 import { TrendingUp, WidthFull } from "@mui/icons-material";
 import { useRate } from "@/contexts/RateContext";
 import { usePosition } from "@/contexts/PositionContext";
-import { usePanel } from "@/contexts/PanelsContext";
 
 export default function Buttons() {
-  const { consume, kwhPrice } = useRate();
+  const { panels } = useRate();
   const { polygons, setPolygons } = usePosition();
-  const { panels } = usePanel();
 
   return (
     <div className={styles.container}>

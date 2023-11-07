@@ -2,11 +2,9 @@ import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
 import { RectangleProps } from "@react-google-maps/api";
 import styles from "./styles.module.css";
-import { usePanel } from "@/contexts/PanelsContext";
 
 export default function PHVSdescription() {
-  const { panelToUse, inverterToUse } = useRate();
-  const { panels, systemPrice } = usePanel();
+  const { panelToUse, inverterToUse, panels, systemPrice } = useRate();
 
   return (
     <div className={styles.container}>

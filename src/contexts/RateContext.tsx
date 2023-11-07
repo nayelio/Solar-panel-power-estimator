@@ -9,7 +9,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { usePosition } from "./PositionContext";
-import { usePanel } from "./PanelsContext";
+import { generatePanels } from "@/helpers/panels";
 
 type RateContextType = {
   securityRate: SecurityRate | null;
@@ -21,7 +21,12 @@ type RateContextType = {
   price: number | null;
   power: number | null;
   sunByDay: number | null;
+  inverterToUseRef: Inverters | null;
   inverterToUse: Inverters | null;
+  panels: {
+    lat: number;
+    lng: number;
+  }[][];
   panelsRealValue:
     | {
         area: number;
@@ -33,7 +38,8 @@ type RateContextType = {
       }[]
     | undefined;
   panelToUse: Panels | null;
-  panelQuantity: number | null;
+  systemPrice: number | null;
+  panelQuantityRef: number | null;
   setTown: React.Dispatch<React.SetStateAction<string | null>>;
   setConsume: React.Dispatch<React.SetStateAction<number | null>>;
   setKwhPrice: React.Dispatch<React.SetStateAction<number | null>>;
@@ -44,8 +50,11 @@ type RateContextType = {
 };
 
 const RateContext = createContext<RateContextType>({
+  inverterToUseRef: null,
   inverterToUse: null,
   securityRate: null,
+  panels: [],
+  systemPrice: null,
   securityRateToUse: null,
   streetLightingRate: null,
   streetLightingRateToUse: null,
@@ -55,7 +64,7 @@ const RateContext = createContext<RateContextType>({
   power: 0,
   price: 0,
   panelToUse: null,
-  panelQuantity: null,
+  panelQuantityRef: null,
   panelsRealValue: undefined,
   setTown: () => {},
   setConsume: () => {},
@@ -75,7 +84,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   >(null);
 
   const { sunData, polygons } = usePosition();
-  const { panels } = usePanel();
+
   const { data: listPanels } = useQuery({
     queryFn: () => request<Panels[]>(myApis.panelsDB),
     queryKey: [myApis.panelsDB],
@@ -149,29 +158,43 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const panelToUse =
     !consume || !polygons.length ? null : panelsRealValue?.[2] ?? null;
 
-  const inverterToUse = useMemo(() => {
-    if (!consume || panels.length == 0) return null;
+  const inverterToUseRef = useMemo(() => {
+    if (!consume) return null;
     const consumeInWatts = (consume * (1000 / 30)) / (sunByDay ?? 0);
-    const systemSizeReference = panels.length * (panelToUse?.Power ?? 0);
-    if (systemSizeReference == consumeInWatts) {
-      const selectedInverter = listInverter
-        ?.sort((a, b) => a.Power - b.Power)
-        .find((inverter) => inverter.Power >= consumeInWatts);
-      return selectedInverter ?? null;
-    } else {
-      const selectedInverter = listInverter
-        ?.sort((a, b) => a.Power - b.Power)
-        .find((inverter) => inverter.Power >= systemSizeReference);
-      return selectedInverter ?? null;
-    }
-  }, [consume, listInverter, panelToUse?.Power, panels.length, sunByDay]);
+    const selectedInverter = listInverter
+      ?.sort((a, b) => a.Power - b.Power)
+      .find((inverter) => inverter.Power >= consumeInWatts);
+    return selectedInverter ?? null;
+  }, [consume, listInverter, sunByDay]);
 
-  const panelQuantity = useMemo(() => {
-    if (!inverterToUse || consume == null) return null;
+  const panelQuantityRef = useMemo(() => {
+    if (!inverterToUseRef || consume == null) return null;
     return Math.ceil(
-      (((inverterToUse.Power ?? 0) / (panelToUse?.value ?? 0)) * 1) / 0.82
+      (((inverterToUseRef.Power ?? 0) / (panelToUse?.value ?? 0)) * 1) / 0.82
     );
-  }, [consume, inverterToUse, panelToUse?.value]);
+  }, [consume, inverterToUseRef, panelToUse?.value]);
+
+  const panels = useMemo(
+    () =>
+      polygons
+        .flatMap((item) => generatePanels(item) ?? [])
+        .filter((item, index) => index < (panelQuantityRef ?? 0)) ?? [],
+    [panelQuantityRef, polygons]
+  );
+  const systemPrice = useMemo(() => {
+    const priceEstimate = panelToUse?.Price! * (panels.length ?? 0);
+    return priceEstimate;
+  }, [panelToUse?.Price, panels.length]);
+
+  const inverterToUse = useMemo(() => {
+    if (!consume || panels.length == null) return null;
+    const systemSize = panels.length * (panelToUse?.Power ?? 0);
+    console.log(systemSize);
+    const selectedInverter2 = listInverter
+      ?.sort((a, b) => b.Power - a.Power)
+      .find((inverter) => inverter.Power <= systemSize);
+    return selectedInverter2 ?? null;
+  }, [consume, listInverter, panelToUse?.Power, panels.length]);
 
   const value = useMemo(
     () => ({
@@ -180,15 +203,18 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       streetLightingRate,
       streetLightingRateToUse,
       kwhPrice,
+      systemPrice,
+      panels,
       listPanels,
       price,
       panelToUse,
       power,
       sunByDay,
       consume,
+      inverterToUseRef,
       inverterToUse,
       panelsRealValue,
-      panelQuantity,
+      panelQuantityRef,
       setTown,
       setConsume,
       setKwhPrice,
@@ -197,6 +223,8 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     }),
     [
       securityRate,
+      panels,
+      systemPrice,
       securityRateToUse,
       streetLightingRate,
       streetLightingRateToUse,
@@ -206,10 +234,11 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
       panelToUse,
       power,
       sunByDay,
+      inverterToUseRef,
       inverterToUse,
       consume,
       panelsRealValue,
-      panelQuantity,
+      panelQuantityRef,
       generatedPowerPerMonth,
     ]
   );
