@@ -1,14 +1,14 @@
 import { usePosition } from "@/contexts/PositionContext";
 import { useRate } from "@/contexts/RateContext";
-import { generatePanels } from "@/helpers/panels";
-import styles from "./styles.module.css";
 import {
   DrawingManagerF,
   GoogleMap,
   MarkerF,
   PolygonF,
 } from "@react-google-maps/api";
-import { useEffect, useMemo } from "react";
+import { debounce } from "lodash";
+import { useCallback } from "react";
+import styles from "./styles.module.css";
 
 interface Props {
   enableDraw: boolean;
@@ -30,9 +30,22 @@ const MapContainer = ({ enableDraw }: Props) => {
   const { position, setPerimeter, setPolygons, setArea, polygons } =
     usePosition();
   const { panels } = useRate();
+
+  const setData = useCallback(
+    (e: google.maps.Polygon) =>
+      debounce((e: google.maps.Polygon) => {
+        console.log("ONPOLIIIII");
+        setPolygons((prev) => [...prev, e]);
+        setArea(google.maps.geometry.spherical.computeArea(e.getPath()));
+        setPerimeter(google.maps.geometry.spherical.computeLength(e.getPath()));
+      }, 100)(e),
+    [setArea, setPerimeter, setPolygons]
+  );
+
   return (
     <div className={styles.map}>
       <GoogleMap
+        key={0}
         mapContainerStyle={mapStyles}
         zoom={23}
         center={position ?? defaultPosition}
@@ -63,31 +76,23 @@ const MapContainer = ({ enableDraw }: Props) => {
           />
         ))}
 
-        {enableDraw && position ? (
-          <DrawingManagerF
-            key={0}
-            drawingMode={google.maps.drawing.OverlayType.POLYGON}
-            options={{
-              polygonOptions: {
-                geodesic: true,
-                strokeWeight: 2,
-                strokeColor: "#353DCB",
-              },
-              drawingControl: true,
-              drawingControlOptions: {
-                position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: [google.maps.drawing.OverlayType.POLYGON],
-              },
-            }}
-            onPolygonComplete={(e) => {
-              setPolygons((prev) => [...prev, e]);
-              setArea(google.maps.geometry.spherical.computeArea(e.getPath()));
-              setPerimeter(
-                google.maps.geometry.spherical.computeLength(e.getPath())
-              );
-            }}
-          />
-        ) : null}
+        <DrawingManagerF
+          key={0}
+          drawingMode={google.maps.drawing.OverlayType.POLYGON}
+          options={{
+            polygonOptions: {
+              geodesic: true,
+              strokeWeight: 2,
+              strokeColor: "#353DCB",
+            },
+            drawingControl: !!enableDraw && !!position,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [google.maps.drawing.OverlayType.POLYGON],
+            },
+          }}
+          onPolygonComplete={setData}
+        />
       </GoogleMap>
     </div>
   );
