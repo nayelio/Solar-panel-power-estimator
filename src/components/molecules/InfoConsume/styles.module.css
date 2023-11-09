@@ -151,9 +151,10 @@
   }
   .p {
     color: #185aa6;
-    text-align: right;
+    text-align: left;
+    width: 88%;
     font-family: Alumni Sans;
-    font-size: 60%;
+    font-size: 80%;
     font-style: normal;
     font-weight: 500;
     line-height: normal;

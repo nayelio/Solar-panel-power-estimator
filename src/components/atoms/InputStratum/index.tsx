@@ -54,6 +54,10 @@ export default function InputStratum() {
         InputProps={{
           startAdornment: <InputAdornment position="start"></InputAdornment>,
         }}
+        inputProps={{
+          min: 0,
+          max: 6,
+        }}
       />
     </div>
   );

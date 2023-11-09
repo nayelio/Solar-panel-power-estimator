@@ -49,7 +49,7 @@ const InfoForm = () => {
             <h1 className={styles.h1}>Responde la encuesta</h1>
             <p className={styles.p}>
               Dejanos saber qué piensas de la página web y su contenido. Realiza
-              la encuentra dando click en el botón
+              la encuesta dando click en el botón
             </p>
             <Link
               href="https://forms.office.com/r/QutHLKvx0b?origin=lprLink"

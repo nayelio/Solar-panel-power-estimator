@@ -56,6 +56,10 @@ const InputConsumeInformation = () => {
             root: styles.mobileLabel, // Asocia la clase de estilo
           },
         }}
+        inputProps={{
+          min: 0,
+          max: 6,
+        }}
       />
 
       <TextField
@@ -102,6 +106,10 @@ const InputConsumeInformation = () => {
           startAdornment: (
             <InputAdornment position="start">$/kWh</InputAdornment>
           ),
+        }}
+        inputProps={{
+          min: 0,
+          max: 6,
         }}
       />
     </div>

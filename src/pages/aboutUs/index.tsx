@@ -6,29 +6,6 @@ import Link from "next/link";
 export default function AboutUs() {
   return (
     <div className={styles.container}>
-      <div className={styles.bttn}>
-        <Link
-          href="https://forms.office.com/r/QutHLKvx0b?origin=lprLink"
-          target="_blank"
-        >
-          <Button
-            className={styles.bttn}
-            sx={{
-              width: "16%",
-              borderRadius: "10px",
-              backgroundColor: "#185aa6",
-              position: "absolute",
-              left: "80%",
-              color: "white",
-              border: "1px solid",
-
-              "& .MuiButton-root": { width: "100%" },
-            }}
-          >
-            Realiza la encuesta
-          </Button>
-        </Link>
-      </div>
       <br></br>
       <div className={styles.body}>
         <br></br>
