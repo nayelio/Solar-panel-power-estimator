@@ -1,15 +1,19 @@
 import { useRate } from "@/contexts/RateContext";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, useMediaQuery } from "@mui/material";
 import styles from "./styles.module.css";
-import React, { SetStateAction } from "react";
 
 const InputConsumeInformation = () => {
+  const isMobile = useMediaQuery("(max-width: 480px)");
   const { consume, setConsume, kwhPrice, setKwhPrice } = useRate();
 
-  const kWhValue = 944.2793;
-
   return (
-    <div className={styles.box}>
+    <div
+      className={styles.box}
+      style={{
+        flexDirection: isMobile ? "column" : "row",
+        width: isMobile ? "100%" : undefined,
+      }}
+    >
       <TextField
         label="Consumo mensual"
         id="filled-start-adornment"

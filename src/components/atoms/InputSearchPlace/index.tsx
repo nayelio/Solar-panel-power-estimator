@@ -1,5 +1,5 @@
 import { useRate } from "@/contexts/RateContext";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { TownEnum } from "../RateResults";
@@ -35,6 +35,7 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
     apiKey,
   });
   const [place, setPlace] = useState<Place | null>(null);
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   const onPress = (item: google.maps.places.AutocompletePrediction | null) => {
     if (!item) return;
@@ -113,13 +114,14 @@ const InputSearchPlace = ({ onSelectPlace }: Props) => {
             },
             "& .MuiFormControl-root": { height: "100%" },
             "& .MuiInputBase-root": { height: "100%" },
+            borderBottomWidth: 0,
           }}
         />
       )}
       noOptionsText="Ingresa la dirección"
       loading={isPlacePredictionsLoading}
       style={{
-        width: "65%",
+        width: isMobile ? "100%" : "65%",
         height: "80%",
         backgroundColor: "white",
         borderRadius: "10px",

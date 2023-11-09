@@ -13,88 +13,47 @@ const Home = () => {
   const isMobile = useMediaQuery("(max-width: 480px)");
   return (
     <div className={styles.container}>
-      {isMobile ? (
-        <div className={styles.body}>
-          <NavBar />
-          <h1 className={styles.h1}>
-            EL SOL BRILLA, TU FACTURA{" "}
-            <span className={styles.span}>DISMINUYE</span>{" "}
-          </h1>
-          <div className={styles.body2}>
-            <img
-              src="/image_landing.png"
-              alt=""
-              width="90%"
-              height="100%"
-              className={styles.image}
-            />
-            <div className={styles.bttn}>
-              <Link href="/aboutUs">
-                <Button
-                  color="primary"
-                  disabled={false}
-                  variant="contained"
-                  sx={{
-                    width: "100%",
-                    height: "90%",
-                    borderRadius: "10px",
-                    backgroundColor: "#185aa6",
-                    color: "#fff",
-                    fontSize: "6px",
-                  }}
-                >
-                  {" "}
-                  Sobre nosotros
-                </Button>
-              </Link>
-            </div>
-            <ButtonArrayHome />
+      <div className={styles.body}>
+        <NavBar />
+        <h1 className={styles.h1}>
+          EL SOL BRILLA, TU FACTURA{" "}
+          <span className={styles.span}>DISMINUYE</span>{" "}
+        </h1>
+        <div className={styles.body2}>
+          <img
+            src="/image_landing.png"
+            alt=""
+            width={isMobile ? "90%" : "55%"}
+            height={isMobile ? "100%" : undefined}
+            className={styles.image}
+          />
+          <div className={styles.bttn}>
+            <Link href="/aboutUs">
+              <Button
+                color="primary"
+                disabled={false}
+                size={isMobile ? undefined : "small"}
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  height: "90%",
+                  borderRadius: "10px",
+                  backgroundColor: "#185aa6",
+                  color: "#fff",
+                  fontSize: isMobile ? "6px" : undefined,
+                }}
+              >
+                {" "}
+                Sobre nosotros
+              </Button>
+            </Link>
           </div>
-          <InfoConsume />
-          <InfoLocation />
-          <InfoForm />
+          <ButtonArrayHome />
         </div>
-      ) : (
-        <div className={styles.body}>
-          <NavBar />
-          <h1 className={styles.h1}>
-            EL SOL BRILLA, TU FACTURA{" "}
-            <span className={styles.span}>DISMINUYE</span>{" "}
-          </h1>
-          <div className={styles.body2}>
-            <img
-              src="/image_landing.png"
-              alt=""
-              width="55%"
-              className={styles.image}
-            />
-            <div className={styles.bttn}>
-              <Link href="/aboutUs">
-                <Button
-                  color="primary"
-                  disabled={false}
-                  size="small"
-                  variant="contained"
-                  sx={{
-                    width: "100%",
-                    height: "90%",
-                    borderRadius: "10px",
-                    backgroundColor: "#185aa6",
-                    color: "#fff",
-                  }}
-                >
-                  {" "}
-                  Sobre nosotros
-                </Button>
-              </Link>
-            </div>
-            <ButtonArrayHome />
-          </div>
-          <InfoConsume />
-          <InfoLocation />
-          <InfoForm />
-        </div>
-      )}
+        <InfoConsume />
+        <InfoLocation />
+        <InfoForm />
+      </div>
     </div>
   );
 };

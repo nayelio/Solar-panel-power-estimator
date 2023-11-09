@@ -97,7 +97,15 @@ const Chart = () => {
   if (!data) return <Skeleton variant="rectangular" width={800} height={400} />;
   return (
     <div className={styles.chart}>
-      {data ? <Bar options={options} data={data} /> : <Skeleton />}
+      {data ? (
+        <Bar
+          options={{ ...options, maintainAspectRatio: false, responsive: true }}
+          data={data}
+          style={isMobile ? { height: 350 } : undefined}
+        />
+      ) : (
+        <Skeleton />
+      )}
     </div>
   );
 };
