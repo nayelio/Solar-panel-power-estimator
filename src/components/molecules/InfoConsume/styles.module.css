@@ -2,7 +2,6 @@
   background-color: rgba(24, 90, 166, 0.3);
   width: 100%;
   height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,27 +114,46 @@
     align-items: center;
     border-radius: 10px;
     border: 1px solid #185aa6;
-    width: 30%;
+    width: 100%;
     height: 100%;
-    font-size: 10%;
+    font-size: 38%;
     padding-inline: 2%;
     background: #fff;
     color: #000;
   }
+  .ButtonArrayContainer {
+    height: 15%;
+    display: flex;
+    width: 93%;
+    flex-direction: row;
+    gap: 3%;
+  }
+  .image {
+    height: 10%;
+    padding-inline: 4%;
+    width: 50%;
+  }
   .container {
     background-color: rgba(24, 90, 166, 0.3);
     width: 100%;
-    height: 100%;
+
+    height: 355px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-block: 10%;
+    margin-block: 13%;
+    top: 100%;
+  }
+  .informationContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
   }
   .p {
     color: #185aa6;
     text-align: right;
     font-family: Alumni Sans;
-    font-size: 20%;
+    font-size: 60%;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -154,13 +172,13 @@
   .description {
     margin-block: 4%;
     color: #000;
-    text-align: left;
+    text-align: justify;
     font-family: Alumni Sans;
     font-size: 100%;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
     line-height: normal;
     display: flex;
-    width: 100%;
+    width: 82%;
   }
 }

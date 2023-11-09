@@ -17,7 +17,7 @@ const InfoConsume = () => {
               src="/aire_bill.png"
               alt=""
               width="100%"
-              height="10%"
+              height="100%"
               loading="lazy"
               onClick={() => {
                 ZoomIn;
@@ -37,11 +37,11 @@ const InfoConsume = () => {
               </div>
               <div
                 className={styles.accordeon}
-                onClick={(e) => {
+                onClick={() => {
                   setMessageIndex(1);
                 }}
               >
-                Ubicación y estrato
+                Ubicación
               </div>
               <div
                 className={styles.accordeon}

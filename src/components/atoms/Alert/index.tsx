@@ -4,17 +4,18 @@ import { RectangleProps } from "@react-google-maps/api";
 import styles from "./styles.module.css";
 
 export default function Alert() {
-  const {
-    consume,
-    panelToUse,
-    generatedPowerPerMonth,
-    kwhPrice,
-    sunByDay,
-    inverterToUse,
-    panels,
-  } = useRate();
+  const { consume, panelToUse, kwhPrice, sunByDay, inverterToUse, panels } =
+    useRate();
 
-  const consumeWithSystem = (consume ?? 0) - (generatedPowerPerMonth ?? 0);
+  const inverterGenerator =
+    ((inverterToUse?.Power ?? 0) / 1000) * (sunByDay ?? 0) * 30;
+
+  let savingConsume;
+  if (inverterGenerator >= (consume ?? 0)) {
+    savingConsume = 100;
+  } else {
+    savingConsume = ((inverterGenerator / (consume ?? 0)) * 100).toFixed(0);
+  }
   return (
     <div className={styles.container}>
       <p className={styles.system}>Beneficios económicos</p>
@@ -56,18 +57,7 @@ export default function Alert() {
       <div className={styles.informationContainer}>
         <div className={styles.pContainer}>
           <p className={styles.pp}>
-            <p className={styles.pGren}>
-              {!consume
-                ? 0
-                : (
-                    ((((inverterToUse?.Power ?? 0) / 1000) *
-                      (sunByDay ?? 0) *
-                      30) /
-                      (consume ?? 0)) *
-                    100
-                  ).toFixed(0)}
-              %
-            </p>
+            <p className={styles.pGren}>{!consume ? 0 : savingConsume} %</p>
             Consumo ahorrado al mes
           </p>
         </div>

@@ -4,14 +4,7 @@ import styles from "./styles.module.css";
 import React, { SetStateAction } from "react";
 
 const InputConsumeInformation = () => {
-  const {
-    consume,
-    setConsume,
-    kwhPrice,
-    setKwhPrice,
-    securityRate,
-    streetLightingRate,
-  } = useRate();
+  const { consume, setConsume, kwhPrice, setKwhPrice } = useRate();
 
   const kWhValue = 944.2793;
 
@@ -21,6 +14,7 @@ const InputConsumeInformation = () => {
         label="Consumo mensual"
         id="filled-start-adornment"
         variant="filled"
+        className={styles.textField}
         sx={{
           m: 1,
           width: "90%",
@@ -53,6 +47,11 @@ const InputConsumeInformation = () => {
         InputProps={{
           startAdornment: <InputAdornment position="start">kWh</InputAdornment>,
         }}
+        InputLabelProps={{
+          classes: {
+            root: styles.mobileLabel, // Asocia la clase de estilo
+          },
+        }}
       />
 
       <TextField
@@ -60,6 +59,7 @@ const InputConsumeInformation = () => {
         id="filled-start-adornment"
         variant="filled"
         color="primary"
+        className={styles.textField}
         sx={{
           m: 1,
           width: "90%",
@@ -77,6 +77,11 @@ const InputConsumeInformation = () => {
           "& .MuiFormLabel-root": {
             color: "#185aa6",
             fontWeight: "bold",
+          },
+        }}
+        InputLabelProps={{
+          classes: {
+            root: styles.mobileLabel, // Asocia la clase de estilo
           },
         }}
         value={kwhPrice?.toString()}

@@ -3,3 +3,8 @@
   flex-direction: row;
   width: 70%;
 }
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .mobileLabel {
+    font-size: 0%;
+  }
+}

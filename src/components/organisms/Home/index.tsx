@@ -24,7 +24,8 @@ const Home = () => {
             <img
               src="/image_landing.png"
               alt=""
-              width="55%"
+              width="90%"
+              height="100%"
               className={styles.image}
             />
             <div className={styles.bttn}>
@@ -32,17 +33,17 @@ const Home = () => {
                 <Button
                   color="primary"
                   disabled={false}
-                  size="small"
                   variant="contained"
                   sx={{
-                    width: "60%",
-                    height: "100%",
+                    width: "100%",
+                    height: "90%",
                     borderRadius: "10px",
                     backgroundColor: "#185aa6",
                     color: "#fff",
-                    fontSize: "0.5%",
+                    fontSize: "6px",
                   }}
                 >
+                  {" "}
                   Sobre nosotros
                 </Button>
               </Link>

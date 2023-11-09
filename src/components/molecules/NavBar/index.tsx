@@ -23,6 +23,7 @@ const NavBar = () => {
                   borderRadius: "10px",
                   fontSize: "50%",
                   width: "100%",
+                  height: "20%",
                   backgroundColor: "#00F536",
                   color: "black",
                   border: "1px solid",
