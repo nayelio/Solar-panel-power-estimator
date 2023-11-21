@@ -52,7 +52,6 @@ const Home = () => {
         </div>
         <InfoConsume />
         <InfoLocation />
-        <InfoForm />
       </div>
     </div>
   );

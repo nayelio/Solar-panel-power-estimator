@@ -162,8 +162,8 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
     if (!consume) return null;
     const consumeInWatts = (consume * (1000 / 30)) / (sunByDay ?? 0);
     const selectedInverter = listInverter
-      ?.sort((a, b) => a.Power - b.Power)
-      .find((inverter) => inverter.Power >= consumeInWatts);
+      ?.sort((a, b) => b.Power - a.Power)
+      .find((inverter) => inverter.Power <= consumeInWatts);
     return selectedInverter ?? null;
   }, [consume, listInverter, sunByDay]);
 
